@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html 
       lang="en"
-      className="dark"
+      className="overflow-x-hidden dark"
       style={{colorScheme:"dark"}}
     >
       <body

@@ -9,7 +9,7 @@ export function HeroSection() {
       <Vortex
         backgroundColor="black"
         rangeY={400}
-        particleCount={1000}
+        particleCount={500}
         baseHue={120}
         // baseSpeed={3}
         containerClassName="flex justify-between items-center"
