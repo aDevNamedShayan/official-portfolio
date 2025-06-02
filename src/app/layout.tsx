@@ -26,8 +26,9 @@ export default function RootLayout({
   return (
     <html 
       lang="en"
-      className="overflow-x-hidden dark"
+      className="overflow-x-hidden"
       style={{colorScheme:"dark"}}
+      suppressHydrationWarning
     >
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-100 dark:bg-black`}

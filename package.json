@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-separator": "^1.1.7",
+    "@tabler/icons-react": "^3.33.0",
     "clsx": "^2.1.1",
     "motion": "^12.15.0",
     "next": "15.3.3",

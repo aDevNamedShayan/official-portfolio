@@ -8,7 +8,7 @@ export function HeroSection() {
     <section className="px-30 h-screen flex justify-between items-center bg-transparent">
       <Vortex
         backgroundColor="black"
-        rangeY={400}
+        rangeY={350}
         particleCount={500}
         baseHue={120}
         // baseSpeed={3}
