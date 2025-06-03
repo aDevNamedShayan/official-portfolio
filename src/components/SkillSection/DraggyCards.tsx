@@ -57,26 +57,18 @@ export function DraggyCards() {
       id: '7',
       logo: NextLogo,
       icon: NextIcon,
-      className: "absolute top-5 left-[40%] rotate-[8deg]",
-      logoClassName: 'dark:invert'
+      className: "absolute top-30 left-[39%] rotate-[8deg]",
+      logoClassName: 'dark:invert',
+      iconClassName: 'invert dark:invert-0',
     },
   ];
   return (
-    <DraggableCardContainer className="relative flex min-h-screen w-full items-center justify-center overflow-clip">
+    <DraggableCardContainer className="relative flex h-full w-full items-center justify-center overflow-clip">
       <p className="absolute top-1/2 mx-auto max-w-sm -translate-y-3/4 text-center text-2xl font-black text-neutral-400 md:text-4xl dark:text-neutral-800">
-        If its your first day at Fight Club, you have to fight.
+        Change meeeeeeeeeeeeeeeeeeeeeee
       </p>
       {items.map((item) => (
         <DraggableCardBody key={item.id} className={item.className}>
-          {/* <img
-            src={item.image}
-            alt={item.title}
-            className="pointer-events-none relative z-10 h-80 w-80 object-cover"
-          />
-          <h3 className="mt-4 text-center text-2xl font-bold text-neutral-700 dark:text-neutral-300">
-            {item.title}
-          </h3>
-           */}
           <aside className="w-fit h-1/5 flex flex-col justify-center items-center gap-2">
             <Image 
               src={SLogo} 
@@ -88,9 +80,13 @@ export function DraggyCards() {
               src={item.icon} 
               alt="Tech Logo" 
               width={24} 
-              className="pointer-events-none invert dark:invert-0 rounded-xs" //may need change in light mode
+              className={cn(
+                "pointer-events-none rounded-xs",
+                item.iconClassName
+              )}
             />
           </aside>
+
           <main className="w-full h-1/2 flex items-center">
             <Image 
               src={item.logo} 
@@ -98,9 +94,10 @@ export function DraggyCards() {
               className={cn(
                 'pointer-events-none h-full rounded-xl', 
                 item.logoClassName,
-              )} //may need change in light mode
+              )}
             />
           </main>
+
           <aside className="w-fit h-1/5 self-end flex flex-col justify-center items-center gap-2 rotate-180">
             <Image 
               src={SLogo} 
@@ -112,7 +109,10 @@ export function DraggyCards() {
               src={item.icon} 
               alt="Tech Logo" 
               width={24} 
-              className="pointer-events-none invert dark:invert-0 rounded-xs" //may need change in light mode
+              className={cn(
+                "pointer-events-none rounded-xs",
+                item.iconClassName
+              )}
             />
           </aside>
         </DraggableCardBody>

@@ -164,11 +164,13 @@ export const DraggableCardBody = ({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "relative w-80 aspect-[0.7] overflow-hidden rounded-md bg-neutral-100 p-6 shadow-2xl transform-3d dark:bg-neutral-900 flex flex-col items-start justify-between",
+        "relative w-80 aspect-[0.7] overflow-hidden rounded-md bg-neutral-100 p-4 shadow-2xl transform-3d dark:bg-neutral-900",
         className,
       )}
     >
-      {children}
+      <div className="size-full flex flex-col items-start justify-between border-2 border-gray-300 dark:border-gray-700 rounded-md p-3">
+        {children}
+      </div>
       <motion.div
         style={{
           opacity: glareOpacity,

@@ -6,10 +6,9 @@
  * Mobile navbar is better positioned at bottom right.
  **/
 
-import React, { useEffect, useRef, useState } from "react";
-import { useTheme } from 'next-themes'
+import React, { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
-import { IconDeviceLaptop, IconLayoutNavbarCollapse, IconMoon, IconSun } from "@tabler/icons-react";
+import { IconLayoutNavbarCollapse, } from "@tabler/icons-react";
 import {
   AnimatePresence,
   MotionValue,
@@ -19,6 +18,7 @@ import {
   useTransform,
 } from "motion/react";
 import { Separator } from "./shadcn/separator";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 export const FloatingDock = ({
   items,
@@ -99,65 +99,14 @@ const FloatingDockDesktop = ({
   items: { title: string; icon: React.ReactNode; href: string }[];
   className?: string;
 }) => {
-  const [ mounted, setMounted ] = useState(false)
-  const [ config, setConfig ] = useState<React.ReactNode>()
-  const [ title, setTitle ] = useState('')
-  const { theme, setTheme } = useTheme()
-
-  useEffect(() => {
-    const ValidateThemeConfig = () => {
-      switch (theme) {
-        case 'system':
-          setConfig(<IconDeviceLaptop className="h-full w-full text-neutral-500 dark:text-neutral-300" />)
-          setTitle('System Theme')
-          break;
-  
-        case 'dark':
-          setConfig(<IconMoon className="h-full w-full text-neutral-500 dark:text-neutral-300" />)
-          setTitle('Dark Theme')
-          break;
-  
-        case 'light':
-          setConfig(<IconSun className="h-full w-full text-neutral-500 dark:text-neutral-300" />)
-          setTitle('Light Theme')
-          break
-  
-        default:
-          break;
-      }
-    }
-    ValidateThemeConfig()
-  }, [theme])
-  
-
-  const handleThemeChange = () => {
-    switch (theme) {
-      case 'system':
-        setTheme('dark')
-        break;
-
-      case 'dark':
-        setTheme('light')
-        break;
-
-      case 'light':
-        setTheme('system')
-        break
-
-      default:
-        break;
-    }
-  }
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-  
-
-  let mouseX = useMotionValue(Infinity);
+  const { mounted, handleThemeChange, themeConfig } = useThemeConfig() 
+  const mouseX = useMotionValue(Infinity);
 
   return (
     <motion.div
+      initial={{ y: '150%' }}
+      animate={{ y: 0 }}
+      transition={{ duration: .5, delay: 1, ease: [.32, .72, 0, .9] }}
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
@@ -175,8 +124,8 @@ const FloatingDockDesktop = ({
         {mounted &&
           <IconContainer 
             mouseX={mouseX} 
-            icon={config}
-            title={title}
+            icon={themeConfig.icon}
+            title={themeConfig.title}
           />
         }
       </button>
@@ -188,48 +137,46 @@ function IconContainer({
   mouseX,
   title,
   icon,
-  href,
 }: {
   mouseX: MotionValue;
   title: string;
   icon: React.ReactNode;
-  href: string;
 }) {
-  let ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
-  let distance = useTransform(mouseX, (val) => {
-    let bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
+  const distance = useTransform(mouseX, (val) => {
+    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
 
     return val - bounds.x - bounds.width / 2;
   });
 
-  let widthTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
-  let heightTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
+  const widthTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
+  const heightTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
 
-  let widthTransformIcon = useTransform(distance, [-150, 0, 150], [20, 40, 20]);
-  let heightTransformIcon = useTransform(
+  const widthTransformIcon = useTransform(distance, [-150, 0, 150], [20, 40, 20]);
+  const heightTransformIcon = useTransform(
     distance,
     [-150, 0, 150],
     [20, 40, 20],
   );
 
-  let width = useSpring(widthTransform, {
+  const width = useSpring(widthTransform, {
     mass: 0.1,
     stiffness: 150,
     damping: 12,
   });
-  let height = useSpring(heightTransform, {
+  const height = useSpring(heightTransform, {
     mass: 0.1,
     stiffness: 150,
     damping: 12,
   });
 
-  let widthIcon = useSpring(widthTransformIcon, {
+  const widthIcon = useSpring(widthTransformIcon, {
     mass: 0.1,
     stiffness: 150,
     damping: 12,
   });
-  let heightIcon = useSpring(heightTransformIcon, {
+  const heightIcon = useSpring(heightTransformIcon, {
     mass: 0.1,
     stiffness: 150,
     damping: 12,
@@ -243,7 +190,7 @@ function IconContainer({
       style={{ width, height }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative flex aspect-square items-center justify-center rounded-full bg-gray-200 dark:bg-neutral-800"
+      className="relative flex aspect-square items-center justify-center rounded-full bg-gray-200 dark:bg-neutral-800 cursor-pointer"
     >
       <AnimatePresence>
         {hovered && (
@@ -257,12 +204,19 @@ function IconContainer({
           </motion.div>
         )}
       </AnimatePresence>
-      <motion.div
-        style={{ width: widthIcon, height: heightIcon }}
-        className="flex items-center justify-center"
-      >
-        {icon}
-      </motion.div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={title}
+          initial={{ opacity: 0, x: '-60%' }}
+          animate={{ opacity: 1, y: 0, x: 0 }}
+          exit={{ opacity: 0, x: '60%' }}
+          transition={{ duration: 0.3 }}
+          style={{ width: widthIcon, height: heightIcon }}
+          className="flex items-center justify-center"
+        >
+          {icon}
+        </motion.div>
+      </AnimatePresence>
     </motion.div>
   );
 }
