@@ -106,7 +106,11 @@ const FloatingDockDesktop = ({
     <motion.div
       initial={{ y: '150%' }}
       animate={{ y: 0 }}
-      transition={{ duration: .5, delay: 1, ease: [.32, .72, 0, .9] }}
+      transition={{ 
+        duration: .5, 
+        delay: 1, 
+        ease: [.32, .72, 0, .95] 
+      }}
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(

@@ -1,2 +1,12 @@
 @import "tailwindcss";
 @custom-variant dark (&:is(.dark *));
+
+@theme  {
+  --color-darkBg: oklch(0.16 0.01 262.25);
+}
+
+@layer theme {
+  * {
+    @apply transition-colors duration-200
+  }
+}

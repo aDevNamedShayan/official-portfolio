@@ -7,11 +7,14 @@ export function HeroSection() {
   return (
     <section className="px-30 h-screen flex justify-between items-center bg-transparent">
       <Vortex
-        backgroundColor="black"
+        backgroundColor="transparent"
         rangeY={350}
         particleCount={500}
         baseHue={120}
-        // baseSpeed={3}
+        baseSpeed={0}
+        rangeSpeed={2}
+        baseRadius={1}
+        rangeRadius={3}
         containerClassName="flex justify-between items-center"
         className="w-full flex justify-between items-center"
       >

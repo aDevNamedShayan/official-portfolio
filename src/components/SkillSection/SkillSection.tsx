@@ -1,4 +1,4 @@
-import { DraggyCards } from "./DraggyCards";
+import { DraggyCards } from "./DraggyCards/DraggyCards";
 
 export function SkillSection() {
   return (
