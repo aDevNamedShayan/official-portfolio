@@ -2,6 +2,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme  {
+  --color-lightBg: oklch(1 0 0);
   --color-darkBg: oklch(0.16 0.01 262.25);
 }
 

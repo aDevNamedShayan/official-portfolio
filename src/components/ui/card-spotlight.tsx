@@ -8,13 +8,11 @@ import { cn } from "@/lib/utils";
 export const CardSpotlight = ({
   children,
   radius = 350,
-  color = "#262626",
   className,
   canvasWrapperClassName,
   ...props
 }: {
   radius?: number;
-  color?: string;
   children: React.ReactNode;
   canvasWrapperClassName?: string;
 } & React.HTMLAttributes<HTMLDivElement>) => {
@@ -37,7 +35,7 @@ export const CardSpotlight = ({
   return (
     <div
       className={cn(
-        "group/spotlight p-10 rounded-md relative border border-neutral-300 dark:border-neutral-800",
+        "group/spotlight p-6 rounded-2xl relative border border-neutral-300 dark:border-neutral-800",
         className
       )}
       onMouseMove={handleMouseMove}
@@ -65,8 +63,12 @@ export const CardSpotlight = ({
             animationSpeed={5}
             containerClassName="bg-transparent absolute inset-0 pointer-events-none"
             colors={[
-              [59, 130, 246],
-              [139, 92, 246],
+              // [59, 130, 246],
+              // [139, 92, 246],
+              // [3, 252, 98],
+              [3, 252, 111],
+              // [144, 252, 3],
+              [3, 252, 231]
             ]}
             dotSize={3}
             showGradient={false}

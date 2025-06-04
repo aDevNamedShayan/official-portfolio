@@ -1,17 +1,37 @@
+'use client'
+
+import { LampHeader } from "../common/LampHeader";
 import { CardSpotlight } from "../ui/card-spotlight";
 import { TracingBeam } from "../ui/trancing-beam";
 
 export function ExperienceSection() {
   return (
     <section>
+      <LampHeader>
+        Build lamps <br /> the right way
+      </LampHeader>
       <TracingBeam wrapperClassName="flex flex-col gap-10">
         {/* <div className="mx-auto antialiased pt-4 relative"> */}
           {dummyContent.map((item, index) => (
-          <CardSpotlight key={index} className="w-full aspect-[4/1]" canvasWrapperClassName="bg-neutral-200 dark:bg-neutral-800">
-            <h3 className="font-bold z-10">
-              {item.title}
-            </h3>
-            <p className="text-neutral-500 text-sm z-50">{item.timeline}</p>
+          <CardSpotlight key={index} className="w-full flex flex-col gap-5" canvasWrapperClassName="bg-neutral-100 dark:bg-neutral-800">
+            <header>
+              <h3 className="font-bold z-10">
+                {item.title}
+              </h3>
+              <p className="text-neutral-500 text-sm z-50">{item.timeline}</p>
+            </header>
+
+            <p>{item.description}</p>
+
+            <ul className="flex flex-wrap gap-2">
+              {item.technologies.map(tech => (
+                <li 
+                  key={tech}
+                  className='px-2 py-0.5 bg-lime-400 rounded-lg text-white text-sm font-bold'
+                >{tech}</li>
+              ))}
+            </ul>
+
           </CardSpotlight>
           //   <div key={`content-${index}`} className="mb-10">
           //     <h2 className="bg-black text-white rounded-full text-sm w-fit px-4 py-1 mb-4">
