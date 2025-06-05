@@ -67,7 +67,7 @@ export const DraggableCardBody = ({
           top: -window.innerHeight / 2,
           left: -window.innerWidth / 2,
           right: window.innerWidth / 2,
-          bottom: window.innerHeight / 2,
+          bottom: window.innerHeight / 4,
         });
       }
     };

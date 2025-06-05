@@ -14,56 +14,61 @@ import ReactIcon from '@/assets/React/Icon.svg'
 import ReactLogo from '@/assets/React/Logo.svg'
 import TailwindIcon from '@/assets/Tailwind/Icon.svg'
 import TailwindLogo from '@/assets/Tailwind/Logo.svg'
+import ReactHookFormIcon from '@/assets/ReactHookForm/Icon.svg'
+import ReactHookFormLogo from '@/assets/ReactHookForm/Logo.svg'
+import TanstackQueryIcon from '@/assets/Tanstack Query/Icon.png'
+import TanstackQueryLogo from '@/assets/Tanstack Query/Logo.png'
 
 export function DraggyCards() {
   const items = [
     {
       id: '1',
-      logo: NextLogo,
-      icon: NextIcon,
-      className: "absolute top-8 left-[30%] rotate-[4deg]",
+      logo: ReactHookFormLogo,
+      icon: ReactHookFormIcon,
+      className: "absolute top-34 left-[45%] rotate-[-7deg]",
     },
     {
       id: '2',
-      logo: NextLogo,
-      icon: NextIcon,
-      className: "absolute top-24 left-[45%] rotate-[-7deg]",
+      logo: TanstackQueryLogo,
+      icon: TanstackQueryIcon,
+      className: "absolute top-18 left-[30%] rotate-[4deg]",
+      logoClassName: 'object-contain'
     },
     {
       id: '3',
       logo: TailwindLogo,
       icon: TailwindIcon,
-      className: "absolute top-20 right-[35%] rotate-[2deg]",
+      className: "absolute top-30 right-[35%] rotate-[2deg]",
     },
     {
       id: '5',
       logo: TypeScriptIcon,
       icon: TypeScriptIcon,
-      className: "absolute top-32 left-[55%] rotate-[10deg]",
+      className: "absolute top-42 left-[55%] rotate-[10deg]",
     },
     {
       id: '6',
       logo: JavaScriptIcon,
       icon: JavaScriptIcon,
-      className: "absolute top-40 left-[25%] rotate-[-7deg]",
+      className: "absolute top-50 left-[25%] rotate-[-7deg]",
     },
     {
       id: '4',
       logo: ReactLogo,
       icon: ReactIcon,
-      className: "absolute top-10 left-[20%] rotate-[-5deg]",
+      className: "absolute top-20 left-[20%] rotate-[-5deg]",
     },
     {
       id: '7',
       logo: NextLogo,
       icon: NextIcon,
-      className: "absolute top-30 left-[39%] rotate-[8deg]",
+      className: "absolute top-40 left-[39%] rotate-[8deg]",
       logoClassName: 'dark:invert',
       iconClassName: 'invert dark:invert-0',
     },
   ];
   return (
-    <DraggableCardContainer className="relative flex h-full w-full items-center justify-center overflow-clip">
+    <DraggableCardContainer className="relative flex h-[110vh] w-full items-center justify-center">
       <p className="absolute top-1/2 mx-auto max-w-sm -translate-y-3/4 text-center text-2xl font-black text-neutral-400 md:text-4xl dark:text-neutral-800">
         Change meeeeeeeeeeeeeeeeeeeeeee
       </p>

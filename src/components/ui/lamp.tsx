@@ -13,14 +13,14 @@ export const LampContainer = ({
   return (
     <div
       className={cn(
-        "relative flex min-h-96 flex-col items-center justify-center overflow-hidden bg-transparent w-full rounded-md z-0",
+        "relative flex min-h-96 flex-col items-center justify-center bg-transparent w-full overflow-hidden rounded-md z-0",
         className
       )}
     >
-      <div className="relative flex w-full flex-1 scale-y-125 items-center justify-center isolate z-0 ">
+      <div className="relative flex w-full h-full flex-1 items-center justify-center isolate z-0 ">
 
         {/* Base Reflection */}
-        <div className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full bg-cyan-500 opacity-50 blur-3xl"></div>
+        <div className="absolute top-[50%] -translate-y-1/2 inset-auto z-1 h-36 w-[28rem] rounded-full bg-teal-500 opacity-50 blur-3xl"></div>
 
         {/* Lamp Reflection */}
         <motion.div
@@ -31,7 +31,7 @@ export const LampContainer = ({
             duration: 0.8,
             ease: "easeInOut",
           }}
-          className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full bg-cyan-400 blur-2xl"
+          className="absolute top-4/10 -translate-y-1/2 inset-auto h-36 w-64 rounded-full bg-emerald-400 blur-2xl"
         ></motion.div>
 
         {/* The Lamp */}
@@ -43,14 +43,14 @@ export const LampContainer = ({
             duration: 0.8,
             ease: "easeInOut",
           }}
-          className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem] bg-cyan-400 "
+          className="absolute top-4/10 -translate-y-1/2 inset-auto z-1 h-0.5 rounded-full w-[30rem] bg-emerald-400"
         ></motion.div>
 
         {/* Upper section's Lamp Reflection dimmer */}
-        <div className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem] bg-lightBg dark:bg-darkBg"></div>
+        <div className="absolute top-0 inset-auto h-4/10 w-[30%] rounded-t-full bg-lightBg dark:bg-darkBg"></div>
       </div>
 
-      <div className="relative z-50 flex -translate-y-80 flex-col items-center px-5">
+      <div className="absolute top-[50%] inset-auto">
         {children}
       </div>
     </div>
