@@ -1,42 +1,75 @@
 'use client'
 
-import * as THREE from 'three'
+import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState, useMemo } from 'react'
+import * as THREE from 'three'
 import { Canvas, extend, useThree, useFrame } from '@react-three/fiber'
-import { useTexture, Environment, Lightformer } from '@react-three/drei'
+import { useTexture, Environment, Lightformer, Text } from '@react-three/drei'
 import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier'
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
-import { useControls, button } from 'leva'
+// import { useControls, button } from 'leva'
 
 import bandTxt from '@/assets/IdCard/band.png'
-import { Tag } from './tag'
+// import { Tag } from './tag'
+
+const Tag = dynamic(() => import('@/components/ui/IdCard/tag').then(mod => mod.Tag), { ssr: false })
 
 extend({ MeshLineGeometry, MeshLineMaterial })
 useTexture.preload(bandTxt.src)
 
-export default function IdCard() {
-  const { debug, gravity } = useControls({ 
-    debug: false,
-    gravity: { value: -40, min: -100, max: 0, step: 1 },
-    reset: button(() => window.location.reload())
-  })
+export function IdCard() {
+  // const { debug, gravity } = useControls({ 
+  //   debug: false,
+  //   gravity: { value: -40, min: -100, max: 0, step: 1 },
+  //   reset: button(() => window.location.reload())
+  // })
+  const gravity = -40
+
+    const glSettings = useMemo(
+    () => ({
+      // toneMapping: THREE.ACESFilmicToneMapping,
+      // toneMappingExposure: 1.5,
+      // outputEncoding: THREE.sRGBEncoding,
+      // shadowMapType: THREE.PCFSoftShadowMap,
+      powerPerference: "high-performance",
+      antialias: true,
+      stencil: false,
+      depth: true,
+    }),
+    []
+  );
 
   return (
-    <Canvas camera={{ position: [0, 0, 20], fov: 25 }}>
+    <Canvas  
+      // style={{
+      //   // width: "100vw",
+      //   height: "100vh",
+      //   // position: "fixed",
+      //   top: 0,
+      //   left: 0,
+      // }}
+      // shadows={false}
+      // gl={glSettings}
+      // dpr={[window.devicePixelRatio, window.devicePixelRatio]} 
+      camera={{ position: [0, 0, 18], fov: 25 }} 
+      className='!w-1/2'
+    >
       <ambientLight intensity={Math.PI} />
-      <Physics debug={debug} interpolate gravity={[0, gravity, 0]} timeStep={1 / 60}>
+      <Physics 
+        // debug={debug}
+        interpolate 
+        gravity={[0, gravity, 0]} 
+        timeStep={1 / 60}
+      >
         <Band />
       </Physics>
-      <Environment background blur={0.75}>
+      <Environment>
         <color attach="background" args={['#111']} />
         <Lightformer intensity={2} color="white" position={[0, -1, 5]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
         <Lightformer intensity={3} color="white" position={[-1, -1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
         <Lightformer intensity={3} color="white" position={[1, 1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
         <Lightformer intensity={10} color="white" position={[-10, 0, 14]} rotation={[0, Math.PI / 2, Math.PI / 3]} scale={[100, 10, 1]} />
       </Environment>
-      {/* <Text position={[0, 5, 0]} fontSize={0.5} color="white">
-        Drag the card
-      </Text> */}
     </Canvas>
   )
 }
@@ -119,13 +152,13 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
         <RigidBody position={[2, 0, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
           <CuboidCollider args={[0.8, 1.125, 0.01]} />
           <Tag
-            scale={3.25}
-            position={[0, -2.4, -0.05]}
+            scale={3.75}
+            position={[0, -3, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={(e) => (e.target.releasePointerCapture(e.pointerId), drag(false))}
             onPointerDown={(e) => (e.target.setPointerCapture(e.pointerId), drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation()))))}
-            cardColor={cardColor}
+            // cardColor={cardColor}
           />
         </RigidBody>
       </group>
