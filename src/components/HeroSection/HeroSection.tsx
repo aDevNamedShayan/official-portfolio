@@ -5,7 +5,7 @@ import { Vortex } from "../ui/vortex";
 
 export function HeroSection() {
   return (
-    <section className="px-30 h-screen flex justify-between items-center bg-transparent">
+    <section id="home" className="px-30 h-screen flex justify-between items-center bg-transparent">
       <Vortex
         backgroundColor="transparent"
         rangeY={350}
@@ -22,7 +22,9 @@ export function HeroSection() {
           <h1 className="text-black dark:text-white font-bold text-5xl">I&apos;m Shayan Noori</h1>
           <span className="text-lg">A front-end Developer</span>
           <span>I am a front-end developer specializing in JavaScript, TypeScript, React.js and Next.js, and I bring fast, responsive, and search engine optimized websites to life.</span>
-          <LitUpButton />
+          <LitUpButton>
+            Download CV
+          </LitUpButton>
         </div>
         <Image 
           src={Me} 

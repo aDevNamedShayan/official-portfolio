@@ -3,7 +3,7 @@ import { DraggyCards } from "./DraggyCards/DraggyCards";
 
 export function SkillSection() {
   return (
-    <section className="flex flex-col gap-10">
+    <section id="skills" className="flex flex-col gap-10">
       <LampHeader>
         My Skills
       </LampHeader>

@@ -7,7 +7,7 @@ import { SkillSection } from "@/components/SkillSection/SkillSection";
 export default function Home() {
   return <main className='flex flex-col gap-10'>
     <NavDock />
-    {/* <HeroSection /> */}
+    <HeroSection />
     <SkillSection />
     <ExperienceSection />
     <ContactSection />

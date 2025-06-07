@@ -9,7 +9,7 @@ import { LampHeader } from "../common/LampHeader";
 
 export function ContactSection() {
   return (
-    <section>
+    <section id='contact'>
       <LampHeader>
         Contact me
       </LampHeader>

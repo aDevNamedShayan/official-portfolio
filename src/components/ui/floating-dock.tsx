@@ -20,6 +20,8 @@ import {
 import { Separator } from "./shadcn/separator";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 
+const GRADIENTED_ITEM_HREF = '#contact'
+
 export const FloatingDock = ({
   items,
   desktopClassName,
@@ -140,10 +142,12 @@ const FloatingDockDesktop = ({
 function IconContainer({
   mouseX,
   title,
+  href,
   icon,
 }: {
   mouseX: MotionValue;
   title: string;
+  href?: string;
   icon: React.ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -194,7 +198,10 @@ function IconContainer({
       style={{ width, height }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative flex aspect-square items-center justify-center rounded-full bg-gray-200 dark:bg-neutral-800 cursor-pointer"
+      className={cn(
+        "relative flex aspect-square items-center justify-center rounded-full bg-gray-200 dark:bg-neutral-800 cursor-pointer",
+        { 'bg-transparent dark:bg-transparent' : GRADIENTED_ITEM_HREF === href }
+      )}
     >
       <AnimatePresence>
         {hovered && (
@@ -218,6 +225,9 @@ function IconContainer({
           style={{ width: widthIcon, height: heightIcon }}
           className="flex items-center justify-center"
         >
+          {GRADIENTED_ITEM_HREF === href ?
+            <div className="absolute inset-0 bg-gradient-to-r from-lime-400 via-emerald-300 to-teal-500 rounded-full animate-gradient-wave -z-1" />
+          : null}
           {icon}
         </motion.div>
       </AnimatePresence>

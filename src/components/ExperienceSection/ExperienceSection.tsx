@@ -7,7 +7,7 @@ import { motion } from "motion/react";
 
 export function ExperienceSection() {
   return (
-    <section className="flex flex-col gap-10">
+    <section id="experiences" className="flex flex-col gap-10">
       <LampHeader>
         My Experience
       </LampHeader>
