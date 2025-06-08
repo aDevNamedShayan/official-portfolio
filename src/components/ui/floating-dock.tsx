@@ -211,6 +211,9 @@ function IconContainer({
             exit={{ opacity: 0, y: 2, x: "-50%" }}
             className="absolute -top-8 left-1/2 w-fit rounded-md border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs whitespace-pre text-neutral-700 dark:border-neutral-900 dark:bg-neutral-800 dark:text-white"
           >
+            {GRADIENTED_ITEM_HREF === href ?
+              <div className="absolute inset-0 bg-gradient-to-r from-lime-400 via-gumGreen to-teal-400 rounded-md animate-gradient-wave -z-1" />
+            : null}
             {title}
           </motion.div>
         )}
@@ -226,7 +229,7 @@ function IconContainer({
           className="flex items-center justify-center"
         >
           {GRADIENTED_ITEM_HREF === href ?
-            <div className="absolute inset-0 bg-gradient-to-r from-lime-400 via-emerald-300 to-teal-500 rounded-full animate-gradient-wave -z-1" />
+            <div className="absolute inset-0 bg-gradient-to-r from-lime-400 via-gumGreen to-teal-400 rounded-full animate-gradient-wave -z-1" />
           : null}
           {icon}
         </motion.div>

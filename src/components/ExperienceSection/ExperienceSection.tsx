@@ -5,6 +5,11 @@ import { CardSpotlight } from "../ui/card-spotlight";
 import { TracingBeam } from "../ui/trancing-beam";
 import { motion } from "motion/react";
 
+const childVariants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: { opacity: 1, y: 0 },
+};
+
 export function ExperienceSection() {
   return (
     <section id="experiences" className="flex flex-col gap-10">
@@ -55,23 +60,32 @@ export function ExperienceSection() {
               {item.description}
             </motion.p>
 
-            <ul className="flex flex-wrap gap-2 z-[1]">
-              {item.technologies.map((tech, index) => (
+            <motion.ul 
+              className="flex flex-wrap gap-2 z-[1]" 
+              // variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              transition={{ staggerChildren: .06, delayChildren: .6 }}
+              // viewport={{ once: true, amount: 0.3 }}
+            >
+              {item.technologies.map((tech) => (
                 <motion.li 
                   key={tech}
                   className='px-2 py-0.5 bg-lime-400 rounded-lg text-white text-sm font-bold'
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: ((index + 1) * .06 + .4),
-                    duration: .15,
-                    ease: 'easeOut',
-                  }}
+                  variants={childVariants}
+                  // initial={{ opacity: 0, y: 15 }}
+                  // animate={{ opacity: 1, y: 0 }}
+                  // transition={{
+                  //   // delay: ((index + 1) * .06 + .4),
+                  //   // delay: .4,
+                  //   // duration: .15,
+                  //   // ease: 'easeOut',
+                  // }}
                 >
                   {tech}
                 </motion.li>
               ))}
-            </ul>
+            </motion.ul>
 
           </CardSpotlight>
         ))}

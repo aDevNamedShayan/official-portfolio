@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Me from '@/assets/Shayan.jpg'
-import { LitUpButton } from "./LitUpBtn/LitUpButton";
+import { LitUpButton } from "../common/LitUpButton";
 import { Vortex } from "../ui/vortex";
 
 export function HeroSection() {
@@ -26,9 +26,9 @@ export function HeroSection() {
             Download CV
           </LitUpButton>
         </div>
-        <Image 
-          src={Me} 
-          alt='Picture of Shayan Noori' 
+        <Image
+          src={Me}
+          alt='Picture of Shayan Noori'
           className="rounded-full size-96"
         />
       </Vortex>
