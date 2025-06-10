@@ -13,6 +13,7 @@ import emailjs from '@emailjs/browser';
 import { LitUpButton } from "@/components/common/LitUpButton";
 import { AnimatePresence, motion } from "motion/react";
 import { FadeWithBlur } from "@/lib/utils/MotionVariants";
+import { BackgroundGradient } from "../background-gradient";
 
 export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React.SetStateAction<boolean>> }) {
   const [pending, setPending] = useState(false)
@@ -42,18 +43,18 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
       console.log('validatedParams', validatedParams)
       setError(null)
       setPending(true)
-      const res = await emailjs.send(serviceID, templateID, validatedParams, userID)
+      // const res = await emailjs.send(serviceID, templateID, validatedParams, userID)
 
-      if(res.status === 200) {
-        setPending(false)
-        setEmailSent(true)
-      }
-
-      // await new Promise(resolve => setTimeout(() => {
-      //   resolve();
+      // if(res.status === 200) {
       //   setPending(false)
       //   setEmailSent(true)
-      // }, 2000))
+      // }
+
+      await new Promise(resolve => setTimeout(() => {
+        resolve();
+        setPending(false)
+        setEmailSent(true)
+      }, 2000))
 
       // console.log('yey')
 
@@ -74,99 +75,101 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
       animate='animate'
       exit='exit'
       variants={FadeWithBlur}
-      className="w-1/2 mx-auto max-w-md p-4 md:p-8"
+      className="w-1/2 max-w-md absolute right-1/4 translate-x-1/2"
     >
-      <h2 className="text-3xl font-bold text-neutral-800 dark:text-neutral-200">
-        Get in touch
-      </h2>
+      <BackgroundGradient className="p-4 md:p-8 bg-lightBg dark:bg-darkBg">
+        <h2 className="text-3xl font-bold text-neutral-800 dark:text-neutral-200">
+          Get in touch
+        </h2>
 
-      <form className="my-8" onSubmit={handleSubmit}>
-        <LabelInputContainer className="mb-4">
-          <Label 
-            htmlFor="email"
-            className={cn({"text-rose-500 dark:text-rose-600" : error?.fieldErrors?.email})}
+        <form className="my-8" onSubmit={handleSubmit}>
+          <LabelInputContainer className="mb-4">
+            <Label 
+              htmlFor="email"
+              className={cn({"text-rose-500 dark:text-rose-600" : error?.fieldErrors?.email})}
+            >
+              Your email
+            </Label>
+
+            <Input 
+              id="email" 
+              name='email' 
+              placeholder="example@gmail.com" 
+              type="email"
+              className={cn({"bg-rose-100 dark:bg-pink-950" : error?.fieldErrors?.email})}
+            />
+
+            <AnimatePresence>
+              {error?.fieldErrors?.email ?
+                <motion.span 
+                  initial={{ opacity: 0, y: -10}}
+                  animate={{ opacity: 1, y: 0}}
+                  exit={{ opacity: 0, y: -10}}
+                  transition={{ 
+                    ease: [.32, .72, 0, .95] 
+                  }}
+                  className="w-fit px-4 py-1 rounded-md flex items-center gap-4 text-rose-500 dark:text-rose-600 bg-rose-100 dark:bg-pink-950"
+                >
+                  <IconAlertTriangle className="shrink-0" />
+                  {error.fieldErrors.email}
+                </motion.span>
+              : null}
+            </AnimatePresence>
+          </LabelInputContainer>
+
+          <LabelInputContainer className="mb-4">
+            <Label 
+              htmlFor="password"
+              className={cn({"text-rose-500 dark:text-rose-600" : error?.fieldErrors?.message})}
+            >
+              Message
+            </Label>
+
+            <Input 
+              id="message" 
+              name='message' 
+              placeholder="Hello Shayan" 
+              is="textarea" 
+              className={cn({"bg-rose-100 dark:bg-pink-950" : error?.fieldErrors?.message})}
+            />
+
+            <AnimatePresence>
+              {error?.fieldErrors?.message ?
+                <motion.span 
+                  initial={{ opacity: 0, y: -10}}
+                  animate={{ opacity: 1, y: 0}}
+                  exit={{ opacity: 0, y: -10}}
+                  transition={{ 
+                    ease: [.32, .72, 0, .95] 
+                  }}
+                  className="w-fit px-4 py-1 rounded-md flex items-center gap-4 text-rose-500 dark:text-rose-600 bg-rose-100 dark:bg-pink-950"
+                >
+                  <IconAlertTriangle className="shrink-0" />
+                  {error.fieldErrors.message}
+                </motion.span>
+              : null}
+            </AnimatePresence>
+          </LabelInputContainer>
+
+          <LitUpButton
+            className="w-38 flex items-center justify-center gap-2"
+            type="submit"
+            disabled={pending}
           >
-            Your email
-          </Label>
-
-          <Input 
-            id="email" 
-            name='email' 
-            placeholder="example@gmail.com" 
-            type="email"
-            className={cn({"bg-rose-100 dark:bg-pink-950" : error?.fieldErrors?.email})}
-          />
-
-          <AnimatePresence>
-            {error?.fieldErrors?.email ?
-              <motion.span 
-                initial={{ opacity: 0, y: -10}}
-                animate={{ opacity: 1, y: 0}}
-                exit={{ opacity: 0, y: -10}}
-                transition={{ 
-                  ease: [.32, .72, 0, .95] 
-                }}
-                className="w-fit px-4 py-1 rounded-md flex items-center gap-4 text-rose-500 dark:text-rose-600 bg-rose-100 dark:bg-pink-950"
-              >
-                <IconAlertTriangle className="shrink-0" />
-                {error.fieldErrors.email}
-              </motion.span>
-            : null}
-          </AnimatePresence>
-        </LabelInputContainer>
-
-        <LabelInputContainer className="mb-4">
-          <Label 
-            htmlFor="password"
-            className={cn({"text-rose-500 dark:text-rose-600" : error?.fieldErrors?.message})}
-          >
-            Message
-          </Label>
-
-          <Input 
-            id="message" 
-            name='message' 
-            placeholder="Hello Shayan" 
-            is="textarea" 
-            className={cn({"bg-rose-100 dark:bg-pink-950" : error?.fieldErrors?.message})}
-          />
-
-          <AnimatePresence>
-            {error?.fieldErrors?.message ?
-              <motion.span 
-                initial={{ opacity: 0, y: -10}}
-                animate={{ opacity: 1, y: 0}}
-                exit={{ opacity: 0, y: -10}}
-                transition={{ 
-                  ease: [.32, .72, 0, .95] 
-                }}
-                className="w-fit px-4 py-1 rounded-md flex items-center gap-4 text-rose-500 dark:text-rose-600 bg-rose-100 dark:bg-pink-950"
-              >
-                <IconAlertTriangle className="shrink-0" />
-                {error.fieldErrors.message}
-              </motion.span>
-            : null}
-          </AnimatePresence>
-        </LabelInputContainer>
-
-        <LitUpButton
-          className="w-36 flex items-center justify-center gap-2"
-          type="submit"
-          disabled={pending}
-        >
-          {pending ?
-            <>
-              <IconLoader2 className='animate-spin' />
-              Sending
-            </>
-            :
-            <>
-              <IconSend2 />
-              Send message
-            </>
-          }
-        </LitUpButton>
-      </form>
+            {pending ?
+              <>
+                <IconLoader2 className='shrink-0 animate-spin' />
+                Sending
+              </>
+              :
+              <>
+                <IconSend2 className="shrink-0" />
+                Send message
+              </>
+            }
+          </LitUpButton>
+        </form>
+      </BackgroundGradient>
     </motion.aside>
   );
 }

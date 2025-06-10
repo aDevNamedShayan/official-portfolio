@@ -10,6 +10,9 @@ import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
 // import { useControls, button } from 'leva'
 
 import bandTxt from '@/assets/IdCard/band.png'
+import { IconArrowSharpTurnRight } from '@tabler/icons-react'
+import { cn } from '@/lib/utils'
+import { caveat } from '@/styles/fonts'
 // import { Tag } from './tag'
 
 const Tag = dynamic(() => import('@/components/ui/IdCard/tag').then(mod => mod.Tag), { ssr: false })
@@ -40,37 +43,48 @@ export function IdCard() {
   );
 
   return (
-    <Canvas  
-      // style={{
-      //   // width: "100vw",
-      //   height: "100vh",
-      //   // position: "fixed",
-      //   top: 0,
-      //   left: 0,
-      // }}
-      // shadows={false}
-      // gl={glSettings}
-      // dpr={[window.devicePixelRatio, window.devicePixelRatio]} 
-      camera={{ position: [0, 0, 18], fov: 25 }} 
-      className='!w-1/2'
-    >
-      <ambientLight intensity={Math.PI} />
-      <Physics 
-        // debug={debug}
-        interpolate 
-        gravity={[0, gravity, 0]} 
-        timeStep={1 / 60}
+    <>
+      <Canvas  
+        // style={{
+        //   // width: "100vw",
+        //   height: "100vh",
+        //   // position: "fixed",
+        //   top: 0,
+        //   left: 0,
+        // }}
+        // shadows={false}
+        gl={glSettings}
+        // dpr={[window.devicePixelRatio, window.devicePixelRatio]} 
+        camera={{ position: [0, 0, 18], fov: 25 }} 
+        className='!w-full'
       >
-        <Band />
-      </Physics>
-      <Environment>
-        <color attach="background" args={['#111']} />
-        <Lightformer intensity={2} color="white" position={[0, -1, 5]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
-        <Lightformer intensity={3} color="white" position={[-1, -1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
-        <Lightformer intensity={3} color="white" position={[1, 1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
-        <Lightformer intensity={10} color="white" position={[-10, 0, 14]} rotation={[0, Math.PI / 2, Math.PI / 3]} scale={[100, 10, 1]} />
-      </Environment>
-    </Canvas>
+        <ambientLight intensity={Math.PI} />
+        <Physics 
+          // debug={debug}
+          interpolate 
+          gravity={[0, gravity, 0]} 
+          timeStep={1 / 60}
+        >
+          <Band />
+        </Physics>
+        <Environment>
+          <color attach="background" args={['#111']} />
+          <Lightformer intensity={2} color="white" position={[0, -1, 5]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
+          <Lightformer intensity={3} color="white" position={[-1, -1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
+          <Lightformer intensity={3} color="white" position={[1, 1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
+          <Lightformer intensity={10} color="white" position={[-10, 0, 14]} rotation={[0, Math.PI / 2, Math.PI / 3]} scale={[100, 10, 1]} />
+        </Environment>
+      </Canvas>
+      <p 
+        className={cn(
+          "absolute top-[30%] left-[42%] -translate-x-1/2 -z-1 w-fit text-lg font-bold text-neutral-300 md:text-4xl dark:text-neutral-800 flex items-center gap-4",
+          caveat.className
+        )}
+      >
+        pull my card
+        <IconArrowSharpTurnRight className="shrink-0 rotate-90  origin-left size-8" />
+      </p>
+    </>
   )
 }
 
@@ -138,7 +152,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
 
   return (
     <>
-      <group position={[0, 4, 0]}>
+      <group position={[-4, 4, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
         <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />

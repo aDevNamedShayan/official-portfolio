@@ -1,17 +1,26 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Providers } from "@/providers/Providers";
 import "./globals.css";
-import { Providers } from "@/components/Providers";
+import { rubik } from "@/styles/fonts";
+import { Footer } from "@/components/layout/footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// const font = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const font = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
+
+// const font = Ubuntu({ weight: ['300', '400', '500', '700'] })
+// const font = Poppins({ weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] })
+// const font = Josefin_Sans()
+// const font = Inter()
+// const font = Roboto()
+// const font = Open_Sans()
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -31,10 +40,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-lightBg dark:bg-darkBg`}
+        className={`${rubik.className} antialiased bg-lightBg dark:bg-darkBg`}
       >
         <Providers>
           {children}
+          {/* <Footer /> */}
         </Providers>
       </body>
     </html>

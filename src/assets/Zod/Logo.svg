@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="130 61 256 297">
+  <defs>
+    <path d="M200.420694,0 L53.6308282,0 L0,53.3549074 L121.760272,199.97871 L131.473707,189.079838 L252,53.8556526 L200.420694,0 Z M195.058122,12.5620609 L234.89802,54.1622312 L122.097509,180.72046 L16.9997871,54.1622312 L58.8145625,12.5620609 L195.058122,12.5620609 Z" id="path-1"/>
+    <filter x="-2.2%" y="-2.8%" width="105.2%" height="106.5%" filterUnits="objectBoundingBox" id="filter-2">
+      <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.36 0" type="matrix" in="shadowBlurOuter1"/>
+    </filter>
+  </defs>
+  <title>zod</title>
+  <polygon fill="#18253F" points="190.956 75.323 327.233 75.323 367.167 117.014 254.178 243.567 149.097 117.014" fill-rule="nonzero" style="stroke-width: 1; transform-box: fill-box; transform-origin: 50% 50%;"/>
+  <polygon fill="#274D82" points="281.566 213.676 228.153 213.676 204.029 184.142 272.392 184.14 272.395 179.951 311.472 179.951" fill-rule="nonzero" style="stroke-width: 1; transform-box: fill-box; transform-origin: 50% 50%;"/>
+  <polygon fill="#274D82" points="355.699 105.124 208.318 190.215 189.092 166.163 303.19 100.286 301.095 96.655 331.486 79.109" fill-rule="nonzero" style="stroke-width: 1; transform-box: fill-box; transform-origin: 50% 50%;"/>
+  <polygon fill="#274D82" points="276.736 75.366 166.07 139.258 148.859 117.773 222.954 74.994" fill-rule="nonzero" style="stroke-width: 1; transform-box: fill-box; transform-origin: 50% 50%;"/>
+  <g transform="matrix(1, 0, 0, 1, 132.139664, 62.80146)" fill-rule="nonzero" style="transform-origin: 126px 99.9894px;">
+    <path d="M200.420694,0 L53.6308282,0 L0,53.3549074 L121.760272,199.97871 L131.473707,189.079838 L252,53.8556526 L200.420694,0 Z M195.058122,12.5620609 L234.89802,54.1622312 L122.097509,180.72046 L16.9997871,54.1622312 L58.8145625,12.5620609 L195.058122,12.5620609 Z" fill="black" fill-opacity="1" filter="url(#filter-2)"/>
+    <path d="M200.420694,0 L53.6308282,0 L0,53.3549074 L121.760272,199.97871 L131.473707,189.079838 L252,53.8556526 L200.420694,0 Z M195.058122,12.5620609 L234.89802,54.1622312 L122.097509,180.72046 L16.9997871,54.1622312 L58.8145625,12.5620609 L195.058122,12.5620609 Z" fill="#3068B7"/>
+  </g>
+  <text style="fill: rgb(48, 104, 183); font-family: Arial, sans-serif; font-size: 98px; font-weight: 700; white-space: pre;" transform="matrix(1.07935, 0, 0, 1, -36.764793, 19.210876)" x="179.48" y="331.387">Zod</text>
+</svg>

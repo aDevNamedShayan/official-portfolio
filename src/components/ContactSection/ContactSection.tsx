@@ -13,7 +13,7 @@ export function ContactSection() {
       <LampHeader>
         Contact me
       </LampHeader>
-      <main className='h-screen flex items-center'>
+      <main className='h-screen relative flex items-center'>
         <IdCard />
         <FormContainer />
       </main>

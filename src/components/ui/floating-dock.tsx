@@ -110,7 +110,7 @@ const FloatingDockDesktop = ({
       animate={{ y: 0 }}
       transition={{ 
         duration: .5, 
-        delay: 1, 
+        delay: 5, 
         ease: [.32, .72, 0, .95] 
       }}
       onMouseMove={(e) => mouseX.set(e.pageX)}

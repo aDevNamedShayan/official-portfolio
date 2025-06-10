@@ -21,7 +21,19 @@
     50% {
       background-position: 100%;
     }
-  }
+  };
+
+  --animate-float: float 4s ease-in-out infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(.5rem);
+    }
+    50% {
+      transform: translateY(-.5rem);
+    }
+  };
 }
 
 html {

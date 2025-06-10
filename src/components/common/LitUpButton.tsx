@@ -1,17 +1,22 @@
 'use client'
 
+import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "motion/react";
 
 interface LitUpBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   className?: string;
+  wrapperClassName?: string;
   disabled?: boolean;
 }
 
-export function LitUpButton({ children, className, disabled = false, ...props }: LitUpBtnProps) {
+export function LitUpButton({ children, className, wrapperClassName, disabled = false, ...props }: LitUpBtnProps) {
   return (
-    <button 
-      className="max-w-fit p-[3px] relative font-medium"
+    <motion.button 
+      className={cn(
+        "max-w-fit p-[3px] relative font-medium cursor-pointer",
+        wrapperClassName
+      )}
       disabled={disabled}
       { ...props }
     >
@@ -30,6 +35,6 @@ export function LitUpButton({ children, className, disabled = false, ...props }:
           </motion.span>
         </AnimatePresence>
       </div>
-    </button>
+    </motion.button>
   );
 }

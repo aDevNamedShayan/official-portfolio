@@ -4,6 +4,7 @@ import {
   DraggableCardContainer,
 } from "@/components/ui/draggable-card";
 import { cn } from "@/lib/utils";
+import { DottedBackground } from "@/components/ui/Backgrounds/dotted-background";
 
 import SLogo from '@/assets/LetterS.svg'
 import NextIcon from '@/assets/NextJs/Icon.svg'
@@ -18,59 +19,88 @@ import ReactHookFormIcon from '@/assets/ReactHookForm/Icon.svg'
 import ReactHookFormLogo from '@/assets/ReactHookForm/Logo.svg'
 import TanstackQueryIcon from '@/assets/Tanstack Query/Icon.png'
 import TanstackQueryLogo from '@/assets/Tanstack Query/Logo.png'
+import ZodIcon from '@/assets/Zod/Icon.svg'
+import ZodLogo from '@/assets/Zod/Logo.svg'
+import GitIcon from '@/assets/Git/Icon.svg'
+import GitLogo from '@/assets/Git/Logo.svg'
+import { GridBackground } from "@/components/ui/Backgrounds/grid-background";
+import { caveat } from "@/styles/fonts";
+import { IconArrowSharpTurnRight } from "@tabler/icons-react";
 
 export function DraggyCards() {
   const items = [
     {
       id: '1',
-      logo: ReactHookFormLogo,
-      icon: ReactHookFormIcon,
-      className: "absolute top-34 left-[45%] rotate-[-7deg]",
+      logo: GitLogo,
+      icon: GitIcon,
+      className: "absolute top-24 left-[42%] rotate-[-4deg]",
     },
     {
       id: '2',
-      logo: TanstackQueryLogo,
-      icon: TanstackQueryIcon,
-      className: "absolute top-18 left-[30%] rotate-[4deg]",
-      logoClassName: 'object-contain'
+      logo: ZodLogo,
+      icon: ZodIcon,
+      className: "absolute top-24 right-[22%] rotate-[12deg]",
     },
     {
       id: '3',
-      logo: TailwindLogo,
-      icon: TailwindIcon,
-      className: "absolute top-30 right-[35%] rotate-[2deg]",
+      logo: ReactHookFormLogo,
+      icon: ReactHookFormIcon,
+      className: "absolute top-18 left-[25%] rotate-[4deg]",
+    },
+    {
+      id: '4',
+      logo: TanstackQueryLogo,
+      icon: TanstackQueryIcon,
+      logoClassName: 'object-contain',
+      className: "absolute top-34 left-[45%] rotate-[-7deg]",
     },
     {
       id: '5',
+      logo: TailwindLogo,
+      icon: TailwindIcon,
+      className: "absolute top-30 left-[35%] rotate-[5deg]",
+    },
+    {
+      id: '6',
       logo: TypeScriptIcon,
       icon: TypeScriptIcon,
       className: "absolute top-42 left-[55%] rotate-[10deg]",
     },
     {
-      id: '6',
+      id: '7',
       logo: JavaScriptIcon,
       icon: JavaScriptIcon,
-      className: "absolute top-50 left-[25%] rotate-[-7deg]",
+      className: "absolute top-50 left-[22%] rotate-[-7deg]",
     },
     {
-      id: '4',
+      id: '8',
       logo: ReactLogo,
       icon: ReactIcon,
       className: "absolute top-20 left-[20%] rotate-[-5deg]",
     },
     {
-      id: '7',
+      id: '9',
       logo: NextLogo,
       icon: NextIcon,
-      className: "absolute top-40 left-[39%] rotate-[8deg]",
       logoClassName: 'dark:invert',
       iconClassName: 'invert dark:invert-0',
+      className: "absolute top-40 left-[39%] rotate-[8deg]",
     },
   ];
   return (
     <DraggableCardContainer className="relative flex h-[110vh] w-full items-center justify-center">
+      <GridBackground />
       <p className="absolute top-1/2 mx-auto max-w-sm -translate-y-3/4 text-center text-2xl font-black text-neutral-400 md:text-4xl dark:text-neutral-800">
         Change meeeeeeeeeeeeeeeeeeeeeee
+      </p>
+      <p 
+        className={cn(
+          "absolute top-[5%] right-[10%] w-fit text-lg font-bold text-neutral-300 md:text-4xl dark:text-neutral-800 flex items-center gap-4",
+          caveat.className
+        )}
+      >
+        drag the cards
+        <IconArrowSharpTurnRight className="shrink-0 rotate-90 origin-left size-8" />
       </p>
       {items.map((item) => (
         <DraggableCardBody key={item.id} className={item.className}>
@@ -97,7 +127,7 @@ export function DraggyCards() {
               src={item.logo} 
               alt="Tech Logo" 
               className={cn(
-                'pointer-events-none h-full rounded-xl', 
+                'pointer-events-none size-full rounded-xl', 
                 item.logoClassName,
               )}
             />
