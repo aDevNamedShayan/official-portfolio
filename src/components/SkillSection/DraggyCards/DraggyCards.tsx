@@ -26,80 +26,84 @@ import GitLogo from '@/assets/Git/Logo.svg'
 import { GridBackground } from "@/components/ui/Backgrounds/grid-background";
 import { caveat } from "@/styles/fonts";
 import { IconArrowSharpTurnRight } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
+
+const items = [
+  {
+    id: '1',
+    logo: GitLogo,
+    icon: GitIcon,
+    className: "absolute top-24 left-[42%] rotate-[-4deg]",
+  },
+  {
+    id: '2',
+    logo: ZodLogo,
+    icon: ZodIcon,
+    className: "absolute top-24 right-[22%] rotate-[12deg]",
+  },
+  {
+    id: '3',
+    logo: ReactHookFormLogo,
+    icon: ReactHookFormIcon,
+    className: "absolute top-18 left-[25%] rotate-[4deg]",
+  },
+  {
+    id: '4',
+    logo: TanstackQueryLogo,
+    icon: TanstackQueryIcon,
+    logoClassName: 'object-contain',
+    className: "absolute top-34 left-[45%] rotate-[-7deg]",
+  },
+  {
+    id: '5',
+    logo: TailwindLogo,
+    icon: TailwindIcon,
+    className: "absolute top-30 left-[35%] rotate-[5deg]",
+  },
+  {
+    id: '6',
+    logo: TypeScriptIcon,
+    icon: TypeScriptIcon,
+    className: "absolute top-42 left-[55%] rotate-[10deg]",
+  },
+  {
+    id: '7',
+    logo: JavaScriptIcon,
+    icon: JavaScriptIcon,
+    className: "absolute top-50 left-[22%] rotate-[-7deg]",
+  },
+  {
+    id: '8',
+    logo: ReactLogo,
+    icon: ReactIcon,
+    className: "absolute top-20 left-[20%] rotate-[-5deg]",
+  },
+  {
+    id: '9',
+    logo: NextLogo,
+    icon: NextIcon,
+    logoClassName: 'dark:invert',
+    iconClassName: 'invert dark:invert-0',
+    className: "absolute top-40 left-[39%] rotate-[8deg]",
+  },
+];
 
 export function DraggyCards() {
-  const items = [
-    {
-      id: '1',
-      logo: GitLogo,
-      icon: GitIcon,
-      className: "absolute top-24 left-[42%] rotate-[-4deg]",
-    },
-    {
-      id: '2',
-      logo: ZodLogo,
-      icon: ZodIcon,
-      className: "absolute top-24 right-[22%] rotate-[12deg]",
-    },
-    {
-      id: '3',
-      logo: ReactHookFormLogo,
-      icon: ReactHookFormIcon,
-      className: "absolute top-18 left-[25%] rotate-[4deg]",
-    },
-    {
-      id: '4',
-      logo: TanstackQueryLogo,
-      icon: TanstackQueryIcon,
-      logoClassName: 'object-contain',
-      className: "absolute top-34 left-[45%] rotate-[-7deg]",
-    },
-    {
-      id: '5',
-      logo: TailwindLogo,
-      icon: TailwindIcon,
-      className: "absolute top-30 left-[35%] rotate-[5deg]",
-    },
-    {
-      id: '6',
-      logo: TypeScriptIcon,
-      icon: TypeScriptIcon,
-      className: "absolute top-42 left-[55%] rotate-[10deg]",
-    },
-    {
-      id: '7',
-      logo: JavaScriptIcon,
-      icon: JavaScriptIcon,
-      className: "absolute top-50 left-[22%] rotate-[-7deg]",
-    },
-    {
-      id: '8',
-      logo: ReactLogo,
-      icon: ReactIcon,
-      className: "absolute top-20 left-[20%] rotate-[-5deg]",
-    },
-    {
-      id: '9',
-      logo: NextLogo,
-      icon: NextIcon,
-      logoClassName: 'dark:invert',
-      iconClassName: 'invert dark:invert-0',
-      className: "absolute top-40 left-[39%] rotate-[8deg]",
-    },
-  ];
+  const t = useTranslations('SkillsSection')
+
   return (
     <DraggableCardContainer className="relative flex h-[110vh] w-full items-center justify-center">
       <GridBackground />
-      <p className="absolute top-1/2 mx-auto max-w-sm -translate-y-3/4 text-center text-2xl font-black text-neutral-400 md:text-4xl dark:text-neutral-800">
-        Change meeeeeeeeeeeeeeeeeeeeeee
+      <p className="absolute top-1/2 mx-auto max-w-sm -translate-y-3/4 text-center text-2xl font-black text-neutral-400 md:text-4xl dark:text-neutral-800 pointer-events-none">
+        {t('hiddenText')}
       </p>
       <p 
         className={cn(
-          "absolute top-[5%] right-[10%] w-fit text-lg font-bold text-neutral-300 md:text-4xl dark:text-neutral-800 flex items-center gap-4",
+          "absolute top-[5%] right-[10%] w-fit text-lg font-bold text-neutral-300 md:text-4xl dark:text-neutral-800 flex items-center gap-4 pointer-events-none [direction:ltr]",
           caveat.className
         )}
       >
-        drag the cards
+        {t('drag')}
         <IconArrowSharpTurnRight className="shrink-0 rotate-90 origin-left size-8" />
       </p>
       {items.map((item) => (

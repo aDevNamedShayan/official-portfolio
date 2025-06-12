@@ -19,6 +19,7 @@ import {
 } from "motion/react";
 import { Separator } from "./shadcn/separator";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { useLocaleSwitch } from "@/hooks/useLocaleSwitch";
 
 const GRADIENTED_ITEM_HREF = '#contact'
 
@@ -102,6 +103,7 @@ const FloatingDockDesktop = ({
   className?: string;
 }) => {
   const { mounted, handleThemeChange, themeConfig } = useThemeConfig() 
+  const { handleLocaleSwitch, localeConfig } = useLocaleSwitch()
   const mouseX = useMotionValue(Infinity);
 
   return (
@@ -110,7 +112,7 @@ const FloatingDockDesktop = ({
       animate={{ y: 0 }}
       transition={{ 
         duration: .5, 
-        delay: 5, 
+        delay: 5.6, 
         ease: [.32, .72, 0, .95] 
       }}
       onMouseMove={(e) => mouseX.set(e.pageX)}
@@ -134,6 +136,13 @@ const FloatingDockDesktop = ({
             title={themeConfig.title}
           />
         }
+      </button>
+      <button onClick={handleLocaleSwitch}>
+        <IconContainer 
+          mouseX={mouseX} 
+          icon={localeConfig.icon}
+          title={localeConfig.title}
+        />
       </button>
     </motion.div>
   );

@@ -2,53 +2,35 @@ import React from "react";
 import { FloatingDock } from "@/components/ui/floating-dock";
 import {
   IconBraces,
-  IconBrandGithub,
-  IconBrandX,
   IconBriefcase,
-  IconCode,
-  IconExchange,
   IconHome,
-  IconNewSection,
   IconPhone,
-  IconTerminal2,
 } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 
 export function NavDock() {
+  const t = useTranslations('Nav')
   const links = [
     {
-      title: "Home",
+      title: t('home'),
       icon: <IconHome className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
       href: "#home",
     },
     {
-      title: "My Skills",
+      title: t('skill'),
       icon: <IconBraces className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
       href: "#skills",
     },
     {
-      title: "My Experiences",
+      title: t('exp'),
       icon: <IconBriefcase className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
       href: "#experiences",
     },
     {
-      title: "Contact Me",
+      title: t('contact'),
       icon: <IconPhone className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
       href: "#contact",
     },
-    // {
-    //   title: "Twitter",
-    //   icon: (
-    //     <IconBrandX className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-    //   ),
-    //   href: "#",
-    // },
-    // {
-    //   title: "GitHub",
-    //   icon: (
-    //     <IconBrandGithub className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-    //   ),
-    //   href: "#",
-    // },
   ];
   return (
     <FloatingDock

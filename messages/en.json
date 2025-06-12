@@ -1,0 +1,42 @@
+{
+  "HeroSection": {
+    "name": "Shayan Noori",
+    "role": "Front-end Developer",
+    "introduction": "I am a front-end developer specializing in JavaScript, TypeScript, React.js and Next.js, and I bring fast, responsive, and search engine optimized websites to life.",
+    "download": "Download CV"
+  },
+  "SkillsSection": {
+    "header": "My Skills",
+    "hiddenText": "Change meeeeeeeeeeeeeeeeeeeeeee and also my style/color",
+    "drag": "drag the cards"
+  },
+  "ExpSection": {
+    "header": "My Experience"
+  },
+  "ContactSection": {
+    "header": "Contact me",
+    "touch": "Get in touch",
+    "email": "Your email",
+    "message": "Message",
+    "messagePH": "Hello Shayan",
+    "noEmailErr": "Please enter your email address!",
+    "invEmailErr": "Invalid email format. please check and try again!",
+    "noMsgErr": "Please enter your message!",
+    "shortMsgErr": "Message must be at least 10 characters long!",
+    "sendMsg": "Send message",
+    "sendingMsg": "Sending",
+    "succTitle": "Message Sent",
+    "succDesc": "I'll get back to you as soon as possible, sit tight!",
+    "succReturnBtn": "Return to the form",
+    "hint": "pull my card"
+  },
+  "Nav": {
+    "home": "Home",
+    "skill": "My Skills",
+    "exp": "My Experiences",
+    "contact": "Contact Me",
+    "sysTheme": "System Theme",
+    "darkTheme": "Dark Theme",
+    "lightTheme": "Light Theme"
+  }
+}

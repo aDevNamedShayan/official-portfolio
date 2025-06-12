@@ -1,10 +1,12 @@
 import { IconDeviceLaptop, IconMoon, IconSun } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
 export function useThemeConfig() {
   const [ mounted, setMounted ] = useState(false)
   const { theme, setTheme } = useTheme()
+  const t = useTranslations('Nav')
   
   useEffect(() => {
     setMounted(true)
@@ -13,17 +15,17 @@ export function useThemeConfig() {
   const themeValues = {
     system: {
       icon: <IconDeviceLaptop className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
-      title: 'System Theme',
+      title: t('sysTheme'),
       next: 'dark'
     },
     dark: {
       icon: <IconMoon className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
-      title: 'Dark Theme',
+      title: t('darkTheme'),
       next: 'light'
     },
     light: {
       icon: <IconSun className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
-      title: 'Light Theme',
+      title: t('lightTheme'),
       next: 'system'
     }
   }

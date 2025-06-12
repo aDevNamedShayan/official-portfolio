@@ -1,9 +1,9 @@
 'use client'
 
+import { AnimatePresence, HTMLMotionProps, motion } from "motion/react";
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "motion/react";
 
-interface LitUpBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface LitUpBtnProps extends HTMLMotionProps<"button"> {
   children: React.ReactNode;
   className?: string;
   wrapperClassName?: string;

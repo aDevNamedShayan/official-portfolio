@@ -13,6 +13,7 @@ import bandTxt from '@/assets/IdCard/band.png'
 import { IconArrowSharpTurnRight } from '@tabler/icons-react'
 import { cn } from '@/lib/utils'
 import { caveat } from '@/styles/fonts'
+import { useTranslations } from 'next-intl'
 // import { Tag } from './tag'
 
 const Tag = dynamic(() => import('@/components/ui/IdCard/tag').then(mod => mod.Tag), { ssr: false })
@@ -21,6 +22,7 @@ extend({ MeshLineGeometry, MeshLineMaterial })
 useTexture.preload(bandTxt.src)
 
 export function IdCard() {
+  const t = useTranslations('ContactSection')
   // const { debug, gravity } = useControls({ 
   //   debug: false,
   //   gravity: { value: -40, min: -100, max: 0, step: 1 },
@@ -77,11 +79,11 @@ export function IdCard() {
       </Canvas>
       <p 
         className={cn(
-          "absolute top-[30%] left-[42%] -translate-x-1/2 -z-1 w-fit text-lg font-bold text-neutral-300 md:text-4xl dark:text-neutral-800 flex items-center gap-4",
+          "absolute top-[30%] left-[42%] -translate-x-1/2 -z-1 w-fit text-lg font-bold text-neutral-300 md:text-4xl dark:text-neutral-800 flex items-center gap-4 pointer-events-none [direction:ltr]",
           caveat.className
         )}
       >
-        pull my card
+        {t('hint')}
         <IconArrowSharpTurnRight className="shrink-0 rotate-90  origin-left size-8" />
       </p>
     </>

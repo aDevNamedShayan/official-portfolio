@@ -14,14 +14,16 @@ import { LitUpButton } from "@/components/common/LitUpButton";
 import { AnimatePresence, motion } from "motion/react";
 import { FadeWithBlur } from "@/lib/utils/MotionVariants";
 import { BackgroundGradient } from "../background-gradient";
+import { useTranslations } from "next-intl";
 
 export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React.SetStateAction<boolean>> }) {
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<z.typeToFlattenedError<{email: string[] | null; message: string[] | null}, string> | null>(null)
+  const t = useTranslations('ContactSection')
 
   const emailParamsSchema = z.object({
-    email: z.string().nonempty({ message: 'Please enter your email address! ' }).email('Invalid email format. please check and try again!'),
-    message: z.string().nonempty({ message: 'Please enter your message! ' }).min(10, 'Message must be at least 10 characters long!')
+    email: z.string().nonempty({ message: t('noEmailErr') }).email( t('invEmailErr') ),
+    message: z.string().nonempty({ message: t('noMsgErr') }).min(10, t('shortMsgErr'))
   })
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -79,7 +81,7 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
     >
       <BackgroundGradient className="p-4 md:p-8 bg-lightBg dark:bg-darkBg">
         <h2 className="text-3xl font-bold text-neutral-800 dark:text-neutral-200">
-          Get in touch
+          {t('touch')}
         </h2>
 
         <form className="my-8" onSubmit={handleSubmit}>
@@ -88,7 +90,7 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
               htmlFor="email"
               className={cn({"text-rose-500 dark:text-rose-600" : error?.fieldErrors?.email})}
             >
-              Your email
+              {t('email')}
             </Label>
 
             <Input 
@@ -102,16 +104,21 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
             <AnimatePresence>
               {error?.fieldErrors?.email ?
                 <motion.span 
-                  initial={{ opacity: 0, y: -10}}
+                  initial={{ opacity: 0, y: -50}}
                   animate={{ opacity: 1, y: 0}}
-                  exit={{ opacity: 0, y: -10}}
+                  exit={{ opacity: 0, y: -50}}
                   transition={{ 
-                    ease: [.32, .72, 0, .95] 
+                    ease: [.32, .72, 0, .95],
+                    duration: .5
                   }}
-                  className="w-fit px-4 py-1 rounded-md flex items-center gap-4 text-rose-500 dark:text-rose-600 bg-rose-100 dark:bg-pink-950"
+                  className="w-fit px-4 py-1 rounded-md flex items-center gap-8 text-rose-500 dark:text-rose-600 bg-rose-100 dark:bg-pink-950 text-wrap"
                 >
                   <IconAlertTriangle className="shrink-0" />
-                  {error.fieldErrors.email}
+                  <ol className="list-decimal">
+                    {error.fieldErrors.email.map((err, index) => (
+                      <li key={index}>{err}</li>
+                    ))}
+                  </ol>
                 </motion.span>
               : null}
             </AnimatePresence>
@@ -122,13 +129,13 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
               htmlFor="password"
               className={cn({"text-rose-500 dark:text-rose-600" : error?.fieldErrors?.message})}
             >
-              Message
+              {t('message')}
             </Label>
 
             <Input 
               id="message" 
               name='message' 
-              placeholder="Hello Shayan" 
+              placeholder={t('messagePH')}
               is="textarea" 
               className={cn({"bg-rose-100 dark:bg-pink-950" : error?.fieldErrors?.message})}
             />
@@ -136,16 +143,21 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
             <AnimatePresence>
               {error?.fieldErrors?.message ?
                 <motion.span 
-                  initial={{ opacity: 0, y: -10}}
+                  initial={{ opacity: 0, y: -50}}
                   animate={{ opacity: 1, y: 0}}
-                  exit={{ opacity: 0, y: -10}}
+                  exit={{ opacity: 0, y: -50}}
                   transition={{ 
-                    ease: [.32, .72, 0, .95] 
+                    ease: [.32, .72, 0, .95],
+                    duration: .5
                   }}
-                  className="w-fit px-4 py-1 rounded-md flex items-center gap-4 text-rose-500 dark:text-rose-600 bg-rose-100 dark:bg-pink-950"
+                  className="w-fit px-4 py-1 rounded-md flex items-center gap-8 text-rose-500 dark:text-rose-600 bg-rose-100 dark:bg-pink-950"
                 >
                   <IconAlertTriangle className="shrink-0" />
-                  {error.fieldErrors.message}
+                  <ol className="list-decimal">
+                    {error.fieldErrors.message.map((err, index) => (
+                      <li key={index}>{err}</li>
+                    ))}
+                  </ol>
                 </motion.span>
               : null}
             </AnimatePresence>
@@ -159,12 +171,12 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
             {pending ?
               <>
                 <IconLoader2 className='shrink-0 animate-spin' />
-                Sending
+                {t('sendingMsg')}
               </>
               :
               <>
                 <IconSend2 className="shrink-0" />
-                Send message
+                {t('sendMsg')}
               </>
             }
           </LitUpButton>

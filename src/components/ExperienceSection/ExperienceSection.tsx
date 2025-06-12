@@ -1,5 +1,6 @@
 'use client' //Temporary fix
 
+import { useTranslations } from "next-intl";
 import { LampHeader } from "../common/LampHeader";
 import { CardSpotlight } from "../ui/card-spotlight";
 import { TracingBeam } from "../ui/trancing-beam";
@@ -11,10 +12,12 @@ const childVariants = {
 };
 
 export function ExperienceSection() {
+  const t = useTranslations('ExpSection')
+
   return (
     <section id="experiences" className="flex flex-col gap-10">
       <LampHeader>
-        My Experience
+        {t('header')}
       </LampHeader>
       <TracingBeam wrapperClassName="flex flex-col gap-6">
         {dummyContent.map((item, index) => (

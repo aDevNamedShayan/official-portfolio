@@ -1,6 +1,6 @@
-"use client"
-
 import { ThemeProvider } from "next-themes"
+import { ReactLenis } from 'lenis/react'
+import { NextIntlClientProvider } from "next-intl"
 
 export function Providers({ children }: { children: React.ReactNode}) {
   return (
@@ -9,7 +9,10 @@ export function Providers({ children }: { children: React.ReactNode}) {
     defaultTheme="system"
     enableSystem
   >
-    {children}
+    <NextIntlClientProvider>
+      <ReactLenis root />
+      {children}
+    </NextIntlClientProvider>
   </ThemeProvider>
   )
 }
