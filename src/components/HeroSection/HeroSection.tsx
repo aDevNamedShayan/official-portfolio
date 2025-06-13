@@ -1,10 +1,9 @@
-import { Vortex } from "../ui/vortex";
 import { Introduction } from "./introduction";
 import { FloatingShayan } from "./floatingShayan";
 
 export function HeroSection() {
   return (
-    <section id="home" className="px-30 h-screen flex justify-between items-center bg-transparent">
+    <section id="home" className="h-screen py-8 flex flex-col-reverse lg:flex-row justify-around items-center gap-10 lg:gap-0 bg-transparent">
       {/* <Vortex
         backgroundColor="transparent"
         rangeY={350}

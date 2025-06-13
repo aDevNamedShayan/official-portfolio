@@ -17,9 +17,12 @@ export function FloatingShayan() {
       initial='initial' 
       animate='animate' 
       variants={shayanVariants}
-      className="size-96 animate-float transition duration-500 hover:scale-105"
+      className="size-72 lg:size-96 animate-float transition duration-500 hover:scale-105 flex items-center"
     >
-      <BackgroundGradient fullyRounded>
+      <BackgroundGradient 
+        containerClassName="size-full"
+        fullyRounded
+      >
         <Image
           src={Me}
           alt='Picture of Shayan Noori'

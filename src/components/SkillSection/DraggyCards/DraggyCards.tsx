@@ -1,10 +1,10 @@
 import Image from "next/image";
-import {
-  DraggableCardBody,
-  DraggableCardContainer,
-} from "@/components/ui/draggable-card";
+import { useTranslations } from "next-intl";
+import { IconArrowSharpTurnRight } from "@tabler/icons-react";
+import { DraggableCardBody, DraggableCardContainer } from "@/components/ui/draggable-card";
 import { cn } from "@/lib/utils";
-import { DottedBackground } from "@/components/ui/Backgrounds/dotted-background";
+import { GridBackground } from "@/components/ui/Backgrounds/grid-background";
+import { caveat, harmattan } from "@/styles/fonts";
 
 import SLogo from '@/assets/LetterS.svg'
 import NextIcon from '@/assets/NextJs/Icon.svg'
@@ -23,10 +23,7 @@ import ZodIcon from '@/assets/Zod/Icon.svg'
 import ZodLogo from '@/assets/Zod/Logo.svg'
 import GitIcon from '@/assets/Git/Icon.svg'
 import GitLogo from '@/assets/Git/Logo.svg'
-import { GridBackground } from "@/components/ui/Backgrounds/grid-background";
-import { caveat } from "@/styles/fonts";
-import { IconArrowSharpTurnRight } from "@tabler/icons-react";
-import { useTranslations } from "next-intl";
+import { useLocaleDetector } from "@/hooks/useLocaleDetector";
 
 const items = [
   {
@@ -90,6 +87,7 @@ const items = [
 
 export function DraggyCards() {
   const t = useTranslations('SkillsSection')
+  const isEn = useLocaleDetector()
 
   return (
     <DraggableCardContainer className="relative flex h-[110vh] w-full items-center justify-center">
@@ -99,8 +97,11 @@ export function DraggyCards() {
       </p>
       <p 
         className={cn(
-          "absolute top-[5%] right-[10%] w-fit text-lg font-bold text-neutral-300 md:text-4xl dark:text-neutral-800 flex items-center gap-4 pointer-events-none [direction:ltr]",
-          caveat.className
+          "absolute top-[5%] right-[10%] w-fit text-lg font-bold text-neutral-300 md:text-3xl dark:text-neutral-800 flex items-center gap-4 pointer-events-none [direction:ltr]",
+          { 
+            [caveat.className] : isEn,
+            [harmattan.className] : !isEn
+          }
         )}
       >
         {t('drag')}
@@ -112,15 +113,15 @@ export function DraggyCards() {
             <Image 
               src={SLogo} 
               alt="S Logo" 
-              width={24} 
-              className="pointer-events-none invert dark:invert-0"
+              // width={24} 
+              className="w-4 lg:w-6 pointer-events-none invert dark:invert-0"
             />
             <Image 
               src={item.icon} 
               alt="Tech Logo" 
-              width={24} 
+              // width={24} 
               className={cn(
-                "pointer-events-none rounded-xs",
+                "w-4 lg:w-6 pointer-events-none rounded-xs",
                 item.iconClassName
               )}
             />
@@ -141,15 +142,15 @@ export function DraggyCards() {
             <Image 
               src={SLogo} 
               alt="S Logo" 
-              width={24} 
-              className="pointer-events-none invert dark:invert-0"
+              // width={24} 
+              className="w-4 lg:w-6 pointer-events-none invert dark:invert-0"
             />
             <Image 
               src={item.icon} 
               alt="Tech Logo" 
-              width={24} 
+              // width={18} 
               className={cn(
-                "pointer-events-none rounded-xs",
+                "w-4 lg:w-6 pointer-events-none rounded-xs",
                 item.iconClassName
               )}
             />

@@ -47,7 +47,7 @@ export const LampContainer = ({
         ></motion.div>
 
         {/* Upper section's Lamp Reflection dimmer */}
-        <div className="absolute top-0 inset-auto h-4/10 w-[30%] rounded-t-full bg-lightBg dark:bg-darkBg"></div>
+        <div className="absolute top-0 inset-auto h-4/10 w-[30rem] rounded-t-full bg-lightBg dark:bg-darkBg"></div>
       </div>
 
       <div className="absolute top-[50%] inset-auto">

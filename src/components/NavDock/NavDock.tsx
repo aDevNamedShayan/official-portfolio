@@ -34,8 +34,8 @@ export function NavDock() {
   ];
   return (
     <FloatingDock
-      desktopClassName="fixed bottom-6 right-1/2 translate-x-1/2 z-[10]"
-      // mobileClassName="translate-y-20" // only for demo, remove for production
+      desktopClassName="hidden lg:flex lg:fixed bottom-3 right-1/2 translate-x-1/2 z-[10]"
+      mobileClassName="block lg:hidden fixed bottom-6 right-6 z-[10]" // only for demo, remove for production
       items={links}
     />
   );

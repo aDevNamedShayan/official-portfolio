@@ -58,15 +58,12 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
         setEmailSent(true)
       }, 2000))
 
-      // console.log('yey')
-
     } catch (error) {
       setPending(false)
 
       if(error instanceof z.ZodError) {
         const flatError = error.flatten()
         setError(flatError)
-        console.log('We got error', flatError )
       }
     }
   };
@@ -77,7 +74,7 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
       animate='animate'
       exit='exit'
       variants={FadeWithBlur}
-      className="w-1/2 max-w-md absolute right-1/4 translate-x-1/2"
+      className="w-3/4 max-w-md lg:absolute lg:right-1/4 lg:translate-x-1/2"
     >
       <BackgroundGradient className="p-4 md:p-8 bg-lightBg dark:bg-darkBg">
         <h2 className="text-3xl font-bold text-neutral-800 dark:text-neutral-200">

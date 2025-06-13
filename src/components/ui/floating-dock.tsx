@@ -48,40 +48,102 @@ const FloatingDockMobile = ({
   className?: string;
 }) => {
   const [open, setOpen] = useState(false);
+
+  const { handleThemeChange, themeConfig } = useThemeConfig() 
+  const { handleLocaleSwitch, localeConfig } = useLocaleSwitch()
+
   return (
-    <div className={cn("relative block md:hidden", className)}>
+    <div className={cn("relative", className)}>
       <AnimatePresence>
         {open && (
           <motion.div
             layoutId="nav"
-            className="absolute inset-x-0 bottom-full mb-2 flex flex-col gap-2"
+            className="absolute inset-x-0 bottom-full mb-2 flex flex-col items-center gap-2"
           >
             {items.map((item, idx) => (
               <motion.div
                 key={item.title}
                 initial={{ opacity: 0, y: 10 }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                exit={{
-                  opacity: 0,
-                  y: 10,
-                  transition: {
-                    delay: idx * 0.05,
-                  },
-                }}
-                transition={{ delay: (items.length - 1 - idx) * 0.05 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10, transition: { delay: idx * 0.05 } }}
+                transition={{ delay: (items.length - 1 - idx) * 0.05 + .2 }}
               >
                 <a
                   href={item.href}
                   key={item.title}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-900"
+                  className={cn(
+                    "flex size-10 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-900",
+                    { 'relative bg-transparent dark:bg-transparent' : GRADIENTED_ITEM_HREF === item.href }
+                  )}
                 >
-                  <div className="h-4 w-4">{item.icon}</div>
+                  {GRADIENTED_ITEM_HREF === item.href ?
+                    <div className="absolute inset-0 bg-gradient-to-r from-lime-400 via-gumGreen to-teal-400 rounded-full animate-gradient-wave -z-1" />
+                  : null}
+                  <div className="size-4">{item.icon}</div>
                 </a>
               </motion.div>
             ))}
+            <motion.div
+              // key={item.title}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10, transition: { delay: .15 } }}
+              transition={{ delay: .15 }}
+              className="w-3/4"
+            >
+              <Separator orientation="horizontal" />
+            </motion.div>
+            <motion.div
+              // key={item.title}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10, transition: { delay: .2 } }}
+              transition={{ delay: .1 }}
+            >
+                <button
+                  onClick={handleThemeChange}
+                  className="flex size-10 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-900"
+                >
+                  <AnimatePresence mode="wait">
+                    <motion.div 
+                      key={themeConfig.title}
+                      initial={{ opacity: 0, x: '-60%' }}
+                      animate={{ opacity: 1, y: 0, x: 0 }}
+                      exit={{ opacity: 0, x: '60%' }}
+                      transition={{ duration: 0.3 }}
+                      className="size-4"
+                    >
+                      {themeConfig.icon}
+                    </motion.div>
+                  </AnimatePresence>
+                </button>
+            </motion.div>
+            <motion.div
+              // key={item.title}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10, transition: { delay: .25 } }}
+              transition={{ delay: .05 }}
+            >
+                <button
+                  onClick={handleLocaleSwitch}
+                  className="flex size-10 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-900"
+                >
+                  <AnimatePresence mode="wait">
+                    <motion.div 
+                      key={localeConfig.title}
+                      initial={{ opacity: 0, x: '-60%' }}
+                      animate={{ opacity: 1, y: 0, x: 0 }}
+                      exit={{ opacity: 0, x: '60%' }}
+                      transition={{ duration: 0.3 }}
+                      className="size-4"
+                    >
+                      {localeConfig.icon}
+                    </motion.div>
+                  </AnimatePresence>
+                </button>
+            </motion.div>
+            
           </motion.div>
         )}
       </AnimatePresence>
@@ -118,7 +180,7 @@ const FloatingDockDesktop = ({
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "mx-auto hidden h-16 items-end gap-4 rounded-2xl bg-gray-50 px-4 pb-3 md:flex dark:bg-neutral-900",
+        "mx-auto h-16 items-end gap-4 rounded-2xl bg-gray-50 px-4 pb-3 dark:bg-neutral-900",
         className,
       )}
     >

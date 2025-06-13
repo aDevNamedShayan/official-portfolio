@@ -38,5 +38,8 @@
     "sysTheme": "System Theme",
     "darkTheme": "Dark Theme",
     "lightTheme": "Light Theme"
+  },
+  "Footer": {
+    "text": "Written with 💚 by Shayan Noori"
   }
 }

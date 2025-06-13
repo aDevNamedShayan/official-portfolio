@@ -16,7 +16,7 @@ export function SuccessPage({ setEmailSent }: { setEmailSent: React.Dispatch<Rea
       animate='animate'
       exit='exit'
       variants={FadeWithBlur}
-      className="w-1/2 max-w-md p-4 md:p-8 absolute right-1/4 translate-x-1/2"
+      className="w-4/4 max-w-md p-4 md:p-8 lg:absolute lg:right-1/4 lg:translate-x-1/2"
     >
       <BackgroundLines className="flex flex-col justify-center items-center gap-2">
         <h1 className="text-4xl font-medium flex justify-center gap-3">{t('succTitle')} <IconCheck className="shrink-0 size-12 text-green-400" /></h1>
