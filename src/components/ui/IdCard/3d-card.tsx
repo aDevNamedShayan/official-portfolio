@@ -4,46 +4,43 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import React, { useEffect, useRef, useState, useMemo } from 'react'
-import * as THREE from 'three'
+import { useTranslations } from 'next-intl'
+import { useEffect, useRef, useState } from 'react'
+import { Mesh, Vector3, CatmullRomCurve3, RepeatWrapping } from 'three'
 import { Canvas, extend, useThree, useFrame, ThreeEvent } from '@react-three/fiber'
 import { useTexture, Environment, Lightformer } from '@react-three/drei'
 import { BallCollider, CuboidCollider, Physics, RigidBody, RigidBodyProps, useRopeJoint, useSphericalJoint, RapierRigidBody } from '@react-three/rapier'
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
 import { IconArrowSharpTurnRight } from '@tabler/icons-react'
-import { cn } from '@/lib/utils'
-import { caveat, harmattan } from '@/styles/fonts'
-import { useTranslations } from 'next-intl'
 import { useLocaleDetector } from '@/hooks/useLocaleDetector'
+import { caveat, harmattan } from '@/styles/fonts'
+import { cn } from '@/lib/utils'
 
 import bandTxt from '@/../public/IdCard/band.png'
 
 const Tag = dynamic(() => import('@/components/ui/IdCard/tag').then(mod => mod.Tag), { ssr: false })
 
 extend({ MeshLineGeometry, MeshLineMaterial })
-useTexture.preload(bandTxt.src)
+// useTexture.preload(bandTxt.src)
 
 export function IdCard() {
   const t = useTranslations('ContactSection')
   const isEn = useLocaleDetector()
-  const glSettings = useMemo(() => ({
-    // toneMapping: THREE.ACESFilmicToneMapping,
-    // toneMappingExposure: 1.5,
-    // outputEncoding: THREE.sRGBEncoding,
-    // shadowMapType: THREE.PCFSoftShadowMap,
+  const glSettings = {
     powerPerference: "high-performance",
     antialias: true,
     stencil: false,
     depth: true,
-  }), []);
+  }
 
   return (
     <>
       <Canvas  
         gl={glSettings}
-        // dpr={[window.devicePixelRatio, window.devicePixelRatio]} 
+        // dpr={[window.devicePixelRatio, 2]}
         camera={{ position: [0, 0, 18], fov: 25 }} 
         className='!w-full !h-screen'
+        frameloop='demand'
       >
         <ambientLight intensity={Math.PI} />
         <Physics 
@@ -54,10 +51,6 @@ export function IdCard() {
           <Band />
         </Physics>
         <Environment>
-          <color attach="background" args={['#111']} />
-          <Lightformer intensity={2} color="white" position={[0, -1, 5]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
-          <Lightformer intensity={3} color="white" position={[-1, -1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
-          <Lightformer intensity={3} color="white" position={[1, 1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
           <Lightformer intensity={10} color="white" position={[-10, 0, 14]} rotation={[0, Math.PI / 2, Math.PI / 3]} scale={[100, 10, 1]} />
         </Environment>
       </Canvas>
@@ -77,19 +70,19 @@ export function IdCard() {
   )
 }
 
-function Band({ maxSpeed = 50, minSpeed = 10 }) {
-  const band = useRef<THREE.Mesh>(null)
+function Band({ maxSpeed = 12, minSpeed = 10 }) {
+  const band = useRef<Mesh>(null)
   const fixed = useRef<RapierRigidBody>(null)
   const j1 = useRef<RapierRigidBody>(null)
   const j2 = useRef<RapierRigidBody>(null)
   const j3 = useRef<RapierRigidBody>(null)
   const card = useRef<RapierRigidBody>(null)
-  const vec = new THREE.Vector3(), ang = new THREE.Vector3(), rot = new THREE.Vector3(), dir = new THREE.Vector3()
+  const vec = new Vector3(), ang = new Vector3(), rot = new Vector3(), dir = new Vector3()
   const segmentProps: RigidBodyProps = { type: 'dynamic', canSleep: true, colliders: false, angularDamping: 2, linearDamping: 2 }
   const texture = useTexture(bandTxt.src)
   const { width, height } = useThree((state) => state.size)
-  const [curve] = useState(() => new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()]))
-  const [dragged, drag] = useState<THREE.Vector3 | boolean>(false)
+  const [curve] = useState(() => new CatmullRomCurve3([new Vector3(), new Vector3(), new Vector3(), new Vector3()]))
+  const [dragged, drag] = useState<Vector3 | boolean>(false)
   const [hovered, hover] = useState(false)
 
   useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1])
@@ -114,34 +107,34 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
     }
     if (fixed.current) {
       ;[j1, j2].forEach((ref) => {
-        if (!ref.current?.lerped) ref.current.lerped = new THREE.Vector3().copy(ref.current.translation())
+        if (!ref.current?.lerped) ref.current.lerped = new Vector3().copy(ref.current.translation())
         const clampedDistance = Math.max(0.1, Math.min(1, ref.current.lerped.distanceTo(ref.current.translation())))
         ref.current?.lerped.lerp(ref.current.translation(), delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed)))
       })
-      curve.points[0].copy(j3.current?.translation() ?? new THREE.Vector3())
+      curve.points[0].copy(j3.current?.translation() ?? new Vector3())
       curve.points[1].copy(j2.current?.lerped)
       curve.points[2].copy(j1.current?.lerped)
       curve.points[3].copy(fixed.current.translation())
       band.current?.geometry?.setPoints(curve.getPoints(32))
-      ang.copy(card.current?.angvel() ?? new THREE.Vector3())
-      rot.copy(card.current?.rotation() ?? new THREE.Vector3())
-      card.current?.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z }, true)
+      ang.copy(card.current?.angvel() ?? new Vector3())
+      rot.copy(card.current?.rotation() ?? new Vector3())
+      card.current?.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.1, z: ang.z }, true)
     }
 
     // Add some wobble to the card when not dragged
-    if (card.current && !dragged) {
-      const time = state.clock.getElapsedTime()
-      card.current.setNextKinematicRotation({
-        x: Math.sin(time * 2) * 0.05,
-        y: Math.cos(time * 1.5) * 0.05,
-        z: Math.sin(time) * 0.05,
-        w: 0
-      })
-    }
+    // if (card.current && !dragged) {
+    //   const time = state.clock.getElapsedTime()
+    //   card.current.setNextKinematicRotation({
+    //     x: Math.sin(time * 2) * 0.05,
+    //     y: Math.cos(time * 1.5) * 0.05,
+    //     z: Math.sin(time) * 0.05,
+    //     w: 0
+    //   })
+    // }
   })
 
   curve.curveType = 'chordal'
-  texture.wrapS = texture.wrapT = THREE.RepeatWrapping
+  texture.wrapS = texture.wrapT = RepeatWrapping
 
   const screenWidth = window.innerWidth
   console.log(screenWidth)
@@ -170,7 +163,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
             onPointerUp={(e: ThreeEvent<PointerEvent>) => ((e.target as HTMLElement)?.releasePointerCapture(e.pointerId), drag(false))}
             onPointerDown={(e: ThreeEvent<PointerEvent>) => (
               (e.target as HTMLElement)?.setPointerCapture(e.pointerId), 
-              drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current?.translation() ?? new THREE.Vector3())))
+              drag(new Vector3().copy(e.point).sub(vec.copy(card.current?.translation() ?? new Vector3())))
             )}
           />
         </RigidBody>

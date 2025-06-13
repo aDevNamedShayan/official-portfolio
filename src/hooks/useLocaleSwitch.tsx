@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useLocale } from "next-intl";
 import { redirect } from "@/i18n/navigation";
-import Persian from '@/assets/Languages/fa.svg'
+import Iran from '@/assets/Languages/fa.svg'
 import USA from '@/assets/Languages/en.svg'
 
 export function useLocaleSwitch() {
@@ -9,7 +9,7 @@ export function useLocaleSwitch() {
 
   const localeValues = {
     fa: {
-      icon: <Image src={Persian} alt='Iran flag' className="rounded-full size-full opacity-75" />,
+      icon: <Image src={Iran} alt='Iran flag' className="rounded-full size-full opacity-75" />,
       title: 'تغییر به انگلیسی',
       next: 'en'
     },

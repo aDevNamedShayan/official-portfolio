@@ -35,9 +35,11 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
     if(!serviceID || !templateID || !userID) return
 
     try {
+      const form = e.target as HTMLFormElement;
+
       const emailParams = {
-        email: e.target.email.value,
-        message: e.target.message.value,
+        email: form.email.value,
+        message: form.message.value,
       }
 
       const validatedParams = emailParamsSchema.parse(emailParams)
@@ -45,18 +47,18 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
       console.log('validatedParams', validatedParams)
       setError(null)
       setPending(true)
-      // const res = await emailjs.send(serviceID, templateID, validatedParams, userID)
+      const res = await emailjs.send(serviceID, templateID, validatedParams, userID)
 
-      // if(res.status === 200) {
-      //   setPending(false)
-      //   setEmailSent(true)
-      // }
-
-      await new Promise(resolve => setTimeout(() => {
-        resolve();
+      if(res.status === 200) {
         setPending(false)
         setEmailSent(true)
-      }, 2000))
+      }
+
+      // await new Promise(resolve => setTimeout(() => {
+      //   resolve();
+      //   setPending(false)
+      //   setEmailSent(true)
+      // }, 2000))
 
     } catch (error) {
       setPending(false)

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { use } from "react";
 import { hasLocale } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Providers } from "@/providers/Providers";
 import { Footer } from "@/components/layout/footer";
 import { routing } from "@/i18n/routing";
@@ -10,10 +11,14 @@ import "../globals.css";
 
 export async function generateMetadata({ params }: { params: Promise<{locale: string}>; }) {
   const { locale } = await params;
-  const isEn = locale === 'en';
+  const t = await getTranslations({ locale, namespace: 'Metadata' })
   return {
-    title: isEn? "Shayan Noori | Front-end Developer" : "شایان نوری | توسعه\u200cدهنده فرانت\u200cاند"
+    title: t('title')
   }
+}
+
+export function generateStaticParams() {
+  return routing.locales.map(locale => ({ locale }))
 }
 
 export default function RootLayout({
@@ -25,6 +30,9 @@ export default function RootLayout({
 }>) {
   const { locale } = use(params);
   if (!hasLocale(routing.locales, locale)) notFound();
+
+  // Enable static rendering
+  setRequestLocale(locale);
 
   const isEn = locale === 'en'
   const determineDirection = isEn ? 'ltr' : 'rtl';

@@ -27,6 +27,9 @@ export function FloatingShayan() {
           src={Me}
           alt='Picture of Shayan Noori'
           className="rounded-full size-full"
+          quality={100}
+          priority
+          placeholder="blur"
         />
       </BackgroundGradient>
     </motion.div>

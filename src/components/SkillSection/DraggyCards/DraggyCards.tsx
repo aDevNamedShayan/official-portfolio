@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import { GridBackground } from "@/components/ui/Backgrounds/grid-background";
 import { caveat, harmattan } from "@/styles/fonts";
 
-import SLogo from '@/assets/LetterS.svg'
 import NextIcon from '@/assets/NextJs/Icon.svg'
 import NextLogo from '@/assets/NextJs/Logo.svg'
 import JavaScriptIcon from '@/assets/JavaScript/Icon.svg'
@@ -24,6 +23,7 @@ import ZodLogo from '@/assets/Zod/Logo.svg'
 import GitIcon from '@/assets/Git/Icon.svg'
 import GitLogo from '@/assets/Git/Logo.svg'
 import { useLocaleDetector } from "@/hooks/useLocaleDetector";
+import { CardSymbol } from "./CardSymbol";
 
 const items = [
   {
@@ -110,21 +110,7 @@ export function DraggyCards() {
       {items.map((item) => (
         <DraggableCardBody key={item.id} className={item.className}>
           <aside className="w-fit h-1/5 flex flex-col justify-center items-center gap-2">
-            <Image 
-              src={SLogo} 
-              alt="S Logo" 
-              // width={24} 
-              className="w-4 lg:w-6 pointer-events-none invert dark:invert-0"
-            />
-            <Image 
-              src={item.icon} 
-              alt="Tech Logo" 
-              // width={24} 
-              className={cn(
-                "w-4 lg:w-6 pointer-events-none rounded-xs",
-                item.iconClassName
-              )}
-            />
+            <CardSymbol icon={item.icon} iconClassName={item.iconClassName} />
           </aside>
 
           <main className="w-full h-1/2 flex items-center">
@@ -139,21 +125,7 @@ export function DraggyCards() {
           </main>
 
           <aside className="w-fit h-1/5 self-end flex flex-col justify-center items-center gap-2 rotate-180">
-            <Image 
-              src={SLogo} 
-              alt="S Logo" 
-              // width={24} 
-              className="w-4 lg:w-6 pointer-events-none invert dark:invert-0"
-            />
-            <Image 
-              src={item.icon} 
-              alt="Tech Logo" 
-              // width={18} 
-              className={cn(
-                "w-4 lg:w-6 pointer-events-none rounded-xs",
-                item.iconClassName
-              )}
-            />
+            <CardSymbol icon={item.icon} iconClassName={item.iconClassName} />
           </aside>
         </DraggableCardBody>
       ))}
