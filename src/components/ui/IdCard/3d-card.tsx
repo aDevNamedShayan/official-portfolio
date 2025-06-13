@@ -39,7 +39,7 @@ export function IdCard() {
         gl={glSettings}
         // dpr={[window.devicePixelRatio, 2]}
         camera={{ position: [0, 0, 18], fov: 25 }} 
-        className='!w-full !h-screen'
+        className='!w-full !h-screen min-h-150'
         frameloop='demand'
       >
         <ambientLight intensity={Math.PI} />

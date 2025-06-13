@@ -30,50 +30,50 @@ const items = [
     id: '1',
     logo: GitLogo,
     icon: GitIcon,
-    className: "absolute top-24 left-[42%] rotate-[-4deg]",
+    className: "absolute top-[40%] -translate-y-1/2 left-[49%] -translate-x-1/2 rotate-[-4deg]",
   },
   {
     id: '2',
     logo: ZodLogo,
     icon: ZodIcon,
-    className: "absolute top-24 right-[22%] rotate-[12deg]",
+    className: "absolute top-[39%] -translate-y-1/2 right-[33%] translate-x-1/2 rotate-[-8deg]",
   },
   {
     id: '3',
     logo: ReactHookFormLogo,
     icon: ReactHookFormIcon,
-    className: "absolute top-18 left-[25%] rotate-[4deg]",
+    className: "absolute top-[35%] -translate-y-1/2 left-[33%] -translate-x-1/2 rotate-[4deg]",
   },
   {
     id: '4',
     logo: TanstackQueryLogo,
     icon: TanstackQueryIcon,
     logoClassName: 'object-contain',
-    className: "absolute top-34 left-[45%] rotate-[-7deg]",
+    className: "absolute top-[60%] -translate-y-1/2 left-[60%] -translate-x-1/2 rotate-[-7deg]",
   },
   {
     id: '5',
     logo: TailwindLogo,
     icon: TailwindIcon,
-    className: "absolute top-30 left-[35%] rotate-[5deg]",
+    className: "absolute top-[60%] -translate-y-1/2 left-[43%] -translate-x-1/2 rotate-[5deg]",
   },
   {
     id: '6',
     logo: TypeScriptIcon,
     icon: TypeScriptIcon,
-    className: "absolute top-42 left-[55%] rotate-[10deg]",
+    className: "absolute top-[48%] -translate-y-1/2 left-[65%] -translate-x-1/2 rotate-[10deg]",
   },
   {
     id: '7',
     logo: JavaScriptIcon,
     icon: JavaScriptIcon,
-    className: "absolute top-50 left-[22%] rotate-[-7deg]",
+    className: "absolute top-[53%] -translate-y-1/2 left-[30%] -translate-x-1/2 rotate-[2deg]",
   },
   {
     id: '8',
     logo: ReactLogo,
     icon: ReactIcon,
-    className: "absolute top-20 left-[20%] rotate-[-5deg]",
+    className: "absolute top-[40%] -translate-y-1/2 left-[30%] -translate-x-1/2 rotate-[-5deg]",
   },
   {
     id: '9',
@@ -81,7 +81,8 @@ const items = [
     icon: NextIcon,
     logoClassName: 'dark:invert',
     iconClassName: 'invert dark:invert-0',
-    className: "absolute top-40 left-[39%] rotate-[8deg]",
+    className: "absolute top-[49%] -translate-y-1/2 left-[48%] -translate-x-1/2 rotate-[8deg]",
+    // className: "absolute top-40 left-[39%] rotate-[8deg]",
   },
 ];
 
@@ -90,7 +91,7 @@ export function DraggyCards() {
   const isEn = useLocaleDetector()
 
   return (
-    <DraggableCardContainer className="relative flex h-[110vh] w-full items-center justify-center">
+    <DraggableCardContainer className="relative flex h-[110vh] min-h-160 w-full items-center justify-center">
       <GridBackground />
       <p className="absolute top-1/2 mx-auto max-w-sm -translate-y-3/4 text-center text-2xl font-black text-neutral-400 md:text-4xl dark:text-neutral-800 pointer-events-none">
         {t('hiddenText')}
