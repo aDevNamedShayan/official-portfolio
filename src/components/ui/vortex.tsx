@@ -45,6 +45,7 @@ export const Vortex = (props: VortexProps) => {
   const noise3D = createNoise3D();
   let particleProps = new Float32Array(particlePropsLength);
   let center: [number, number] = [0, 0];
+  let animateId = 0
 
   const HALF_PI: number = 0.5 * Math.PI;
   const TAU: number = 2 * Math.PI;
@@ -113,7 +114,7 @@ export const Vortex = (props: VortexProps) => {
     renderGlow(canvas, ctx);
     renderToScreen(canvas, ctx);
 
-    window.requestAnimationFrame(() => draw(canvas, ctx));
+    animateId = window.requestAnimationFrame(() => draw(canvas, ctx));
   };
 
   const drawParticles = (ctx: CanvasRenderingContext2D) => {
@@ -229,15 +230,22 @@ export const Vortex = (props: VortexProps) => {
     ctx.restore();
   };
 
+  const handleResize = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+    if (canvas && ctx) {
+      resize(canvas, ctx);
+    }
+  }
+
   useEffect(() => {
     setup();
-    window.addEventListener("resize", () => {
-      const canvas = canvasRef.current;
-      const ctx = canvas?.getContext("2d");
-      if (canvas && ctx) {
-        resize(canvas, ctx);
-      }
-    });
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.cancelAnimationFrame(animateId)
+    };
   }, []);
 
   return (
@@ -251,7 +259,7 @@ export const Vortex = (props: VortexProps) => {
         <canvas ref={canvasRef}></canvas>
       </motion.div>
 
-      <div className={cn("relative z-10", props.className)}>
+      <div className={cn("relative z-5", props.className)}>
         {props.children}
       </div>
     </div>
