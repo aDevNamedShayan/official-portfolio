@@ -1,14 +1,14 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-nocheck
+// @ts-nocheck
 
 'use client'
 
 import dynamic from 'next/dynamic'
 import { useTranslations } from 'next-intl'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Mesh, Vector3, CatmullRomCurve3, RepeatWrapping } from 'three'
 import { Canvas, extend, useThree, useFrame, ThreeEvent } from '@react-three/fiber'
-import { useTexture, Environment, Lightformer } from '@react-three/drei'
+import { useTexture, Environment, Lightformer, PerformanceMonitor } from '@react-three/drei'
 import { BallCollider, CuboidCollider, Physics, RigidBody, RigidBodyProps, useRopeJoint, useSphericalJoint, RapierRigidBody } from '@react-three/rapier'
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
 import { IconArrowSharpTurnRight } from '@tabler/icons-react'
@@ -24,35 +24,43 @@ extend({ MeshLineGeometry, MeshLineMaterial })
 // useTexture.preload(bandTxt.src)
 
 export function IdCard() {
+  const [dpr, setDpr] = useState(1)
+
   const t = useTranslations('ContactSection')
   const isEn = useLocaleDetector()
-  const glSettings = {
+  const glSettings = useMemo(() => ({
     powerPerference: "high-performance",
+    alpha: true,
     antialias: true,
     stencil: false,
     depth: true,
-  }
+  }), []) 
 
   return (
     <>
       <Canvas  
         gl={glSettings}
-        // dpr={[window.devicePixelRatio, 2]}
+        dpr={dpr}
         camera={{ position: [0, 0, 18], fov: 25 }} 
-        className='!w-full !h-screen min-h-150'
+        className='!w-full !h-screen min-h-150 touch-pan-down'
         frameloop='demand'
+        // performance={{ min: .5, debounce: [100, 200] }}
+        // id='cardCanvas'
+        // style={{ touchAction: 'none' }}
       >
-        <ambientLight intensity={Math.PI} />
-        <Physics 
-          interpolate 
-          gravity={[0, -40, 0]} 
-          timeStep={1 / 60}
-        >
-          <Band />
-        </Physics>
-        <Environment>
-          <Lightformer intensity={10} color="white" position={[-10, 0, 14]} rotation={[0, Math.PI / 2, Math.PI / 3]} scale={[100, 10, 1]} />
-        </Environment>
+        <PerformanceMonitor onIncline={() => setDpr(1.5)} onDecline={() => setDpr(1)}>
+          <ambientLight intensity={Math.PI} />
+          <Physics 
+            interpolate 
+            gravity={[0, -40, 0]} 
+            timeStep={1 / 60}
+          >
+            <Band />
+          </Physics>
+          <Environment>
+            <Lightformer intensity={10} color="white" position={[-10, 0, 14]} rotation={[0, Math.PI / 2, Math.PI / 3]} scale={[100, 10, 1]} />
+          </Environment>
+        </PerformanceMonitor>
       </Canvas>
       <p 
         className={cn(
@@ -64,25 +72,33 @@ export function IdCard() {
         )}
       >
         {t('hint')}
-        <IconArrowSharpTurnRight className="shrink-0 rotate-90  origin-left size-8" />
+        <IconArrowSharpTurnRight className="shrink-0 rotate-90 origin-left size-8" />
       </p>
     </>
   )
 }
 
-function Band({ maxSpeed = 12, minSpeed = 10 }) {
+function Band({ maxSpeed = 50, minSpeed = 10 }) {
+  const texture = useTexture(bandTxt.src)
   const band = useRef<Mesh>(null)
   const fixed = useRef<RapierRigidBody>(null)
   const j1 = useRef<RapierRigidBody>(null)
   const j2 = useRef<RapierRigidBody>(null)
   const j3 = useRef<RapierRigidBody>(null)
   const card = useRef<RapierRigidBody>(null)
-  const vec = new Vector3(), ang = new Vector3(), rot = new Vector3(), dir = new Vector3()
+  const vec = useMemo(() => new Vector3(), [])
+  const ang = useMemo(() => new Vector3(), [])
+  const rot = useMemo(() => new Vector3(), [])
+  const dir = useMemo(() => new Vector3(), [])
   const segmentProps: RigidBodyProps = { type: 'dynamic', canSleep: true, colliders: false, angularDamping: 2, linearDamping: 2 }
-  const texture = useTexture(bandTxt.src)
   const { width, height } = useThree((state) => state.size)
-  const [curve] = useState(() => new CatmullRomCurve3([new Vector3(), new Vector3(), new Vector3(), new Vector3()]))
   const [dragged, drag] = useState<Vector3 | boolean>(false)
+  const curve = useMemo(() => {
+    const c = new CatmullRomCurve3([new Vector3(), new Vector3(), new Vector3(), new Vector3()])
+    c.curveType = 'chordal'
+    return c
+  }, [])
+  // const [curve] = useState(() => new CatmullRomCurve3([new Vector3(), new Vector3(), new Vector3(), new Vector3()]))
   const [hovered, hover] = useState(false)
 
   useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1])
@@ -104,6 +120,7 @@ function Band({ maxSpeed = 12, minSpeed = 10 }) {
       vec.add(dir.multiplyScalar(state.camera.position.length()))
       ;[card, j1, j2, j3, fixed].forEach((ref) => ref.current?.wakeUp())
       card.current?.setNextKinematicTranslation({ x: vec.x - dragged.x, y: vec.y - dragged.y, z: vec.z - dragged.z })
+      // card.current.style.touchAction = 'none'
     }
     if (fixed.current) {
       ;[j1, j2].forEach((ref) => {
@@ -111,30 +128,20 @@ function Band({ maxSpeed = 12, minSpeed = 10 }) {
         const clampedDistance = Math.max(0.1, Math.min(1, ref.current.lerped.distanceTo(ref.current.translation())))
         ref.current?.lerped.lerp(ref.current.translation(), delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed)))
       })
-      curve.points[0].copy(j3.current?.translation() ?? new Vector3())
+      curve.points[0].copy(j3.current?.translation())
       curve.points[1].copy(j2.current?.lerped)
       curve.points[2].copy(j1.current?.lerped)
       curve.points[3].copy(fixed.current.translation())
       band.current?.geometry?.setPoints(curve.getPoints(32))
-      ang.copy(card.current?.angvel() ?? new Vector3())
-      rot.copy(card.current?.rotation() ?? new Vector3())
+      ang.copy(card.current?.angvel())
+      rot.copy(card.current?.rotation())
       card.current?.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.1, z: ang.z }, true)
     }
-
-    // Add some wobble to the card when not dragged
-    // if (card.current && !dragged) {
-    //   const time = state.clock.getElapsedTime()
-    //   card.current.setNextKinematicRotation({
-    //     x: Math.sin(time * 2) * 0.05,
-    //     y: Math.cos(time * 1.5) * 0.05,
-    //     z: Math.sin(time) * 0.05,
-    //     w: 0
-    //   })
-    // }
   })
 
-  curve.curveType = 'chordal'
-  texture.wrapS = texture.wrapT = RepeatWrapping
+  useMemo(() => {
+    texture.wrapS = texture.wrapT = RepeatWrapping
+  }, [texture])
 
   const screenWidth = window.innerWidth
   console.log(screenWidth)
@@ -163,14 +170,14 @@ function Band({ maxSpeed = 12, minSpeed = 10 }) {
             onPointerUp={(e: ThreeEvent<PointerEvent>) => ((e.target as HTMLElement)?.releasePointerCapture(e.pointerId), drag(false))}
             onPointerDown={(e: ThreeEvent<PointerEvent>) => (
               (e.target as HTMLElement)?.setPointerCapture(e.pointerId), 
-              drag(new Vector3().copy(e.point).sub(vec.copy(card.current?.translation() ?? new Vector3())))
+              drag(new Vector3().copy(e.point).sub(vec.copy(card.current?.translation())))
             )}
           />
         </RigidBody>
       </group>
       <mesh ref={band}>
         <meshLineGeometry />
-        <meshLineMaterial color="#05df72" depthTest={false} resolution={[width, height]} useMap map={texture} repeat={[-3, 1]} lineWidth={isLarge ? 2 : 1} transparent opacity={0.75} />
+        <meshLineMaterial color="#05df72" depthTest={false} resolution={[width, height]} useMap map={texture} repeat={[-3, 1]} lineWidth={isLarge ? 2 : 1.25} transparent opacity={0.75} />
       </mesh>
     </>
   )

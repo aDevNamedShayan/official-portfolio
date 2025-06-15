@@ -91,20 +91,20 @@ export function DraggyCards() {
   const isEn = useLocaleDetector()
 
   return (
-    <DraggableCardContainer className="relative flex h-[110vh] min-h-160 w-full items-center justify-center">
+    <DraggableCardContainer 
+      className={cn(
+        "relative flex h-[110vh] min-h-160 w-full items-center justify-center",
+        { 
+          [caveat.className] : isEn,
+          [harmattan.className] : !isEn
+        }
+      )}
+    >
       <GridBackground />
-      <p className="absolute top-1/2 mx-auto max-w-sm -translate-y-3/4 text-center text-2xl font-black text-neutral-400 md:text-4xl dark:text-neutral-800 pointer-events-none">
+      <p className="absolute top-1/2 mx-auto max-w-sm -translate-y-3/4 text-center text-2xl font-black text-neutral-400 md:text-4xl dark:text-neutral-800 pointer-events-none select-none">
         {t('hiddenText')}
       </p>
-      <p 
-        className={cn(
-          "absolute top-[5%] right-[10%] w-fit text-lg font-bold text-neutral-300 md:text-3xl dark:text-neutral-800 flex items-center gap-4 pointer-events-none [direction:ltr]",
-          { 
-            [caveat.className] : isEn,
-            [harmattan.className] : !isEn
-          }
-        )}
-      >
+      <p className="absolute top-[5%] right-[10%] w-fit text-lg font-bold text-neutral-300 md:text-3xl dark:text-neutral-800 flex items-center gap-4 pointer-events-none select-none [direction:ltr]">
         {t('drag')}
         <IconArrowSharpTurnRight className="shrink-0 rotate-90 origin-left size-8" />
       </p>
