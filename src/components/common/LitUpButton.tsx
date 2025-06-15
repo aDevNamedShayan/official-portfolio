@@ -8,9 +8,10 @@ interface LitUpBtnProps extends HTMLMotionProps<"button"> {
   className?: string;
   wrapperClassName?: string;
   disabled?: boolean;
+  fullyRounded?: boolean;
 }
 
-export function LitUpButton({ children, className, wrapperClassName, disabled = false, ...props }: LitUpBtnProps) {
+export function LitUpButton({ children, className, wrapperClassName, disabled = false, fullyRounded = false, ...props }: LitUpBtnProps) {
   return (
     <motion.button 
       className={cn(
@@ -20,8 +21,14 @@ export function LitUpButton({ children, className, wrapperClassName, disabled = 
       disabled={disabled}
       { ...props }
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-lime-400 via-emerald-300 to-teal-500 rounded-lg animate-gradient-wave" />
-      <div className="px-6 py-2 bg-lightBg dark:bg-darkBg rounded-[6px] relative group transition duration-200 text-black hover:text-white dark:text-white hover:bg-transparent dark:hover:bg-transparent">
+      <div className={cn(
+        "absolute inset-0 bg-gradient-to-r from-lime-400 via-emerald-300 to-teal-500 rounded-lg animate-gradient-wave",
+        { "rounded-full" : fullyRounded }
+      )}/>
+      <div className={cn(
+        "px-6 py-2 bg-lightBg dark:bg-darkBg rounded-[6px] relative group transition duration-200 text-black hover:text-white dark:text-white hover:bg-transparent dark:hover:bg-transparent",
+        { 'rounded-full p-1.5' : fullyRounded }
+      )}>
         <AnimatePresence mode="wait">
           <motion.span 
             key={disabled ? "key1" : "key2"}

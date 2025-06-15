@@ -8,7 +8,7 @@ export function HeroSection() {
       <Vortex
         backgroundColor="transparent"
         rangeY={350}
-        particleCount={400}
+        particleCount={500}
         baseHue={100}
         baseSpeed={.75}
         rangeSpeed={1.5}

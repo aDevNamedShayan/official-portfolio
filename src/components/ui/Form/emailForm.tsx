@@ -6,7 +6,11 @@ import { Input } from "./input";
 import { cn } from "@/lib/utils";
 import {
   IconAlertTriangle,
+  IconBrandGithub,
+  IconCopy,
   IconLoader2,
+  IconMail,
+  IconPhone,
   IconSend2,
 } from "@tabler/icons-react";
 import emailjs from '@emailjs/browser';
@@ -15,6 +19,23 @@ import { AnimatePresence, motion } from "motion/react";
 import { FadeWithBlur } from "@/lib/utils/MotionVariants";
 import { BackgroundGradient } from "../background-gradient";
 import { useTranslations } from "next-intl";
+import { HoverBorderGradient } from "../hover-border-gradient";
+import { LitUpLink } from "@/components/common/LitUpLink";
+
+const links = [
+  {
+    icon: <IconPhone className="shrink-0 text-gumGreen"/>,
+    link: '+98 993 779 4928',
+  },
+  {
+    icon: <IconMail className="shrink-0 text-gumGreen"/>,
+    link: 'nri.shayan@gmail.com',
+  },
+  {
+    icon: <IconBrandGithub className="shrink-0 text-gumGreen"/>,
+    link: 'github.com/aDevNamedShayan',
+  },
+]
 
 export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React.SetStateAction<boolean>> }) {
   const [pending, setPending] = useState(false)
@@ -47,18 +68,18 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
       console.log('validatedParams', validatedParams)
       setError(null)
       setPending(true)
-      const res = await emailjs.send(serviceID, templateID, validatedParams, userID)
+      // const res = await emailjs.send(serviceID, templateID, validatedParams, userID)
 
-      if(res.status === 200) {
-        setPending(false)
-        setEmailSent(true)
-      }
-
-      // await new Promise(resolve => setTimeout(() => {
-      //   resolve();
+      // if(res.status === 200) {
       //   setPending(false)
       //   setEmailSent(true)
-      // }, 2000))
+      // }
+
+      await new Promise(resolve => setTimeout(() => {
+        resolve();
+        setPending(false)
+        setEmailSent(true)
+      }, 2000))
 
     } catch (error) {
       setPending(false)
@@ -83,7 +104,7 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
           {t('touch')}
         </h2>
 
-        <form className="my-8" onSubmit={handleSubmit}>
+        <form className="my-4 lg:my-8" onSubmit={handleSubmit}>
           <LabelInputContainer className="mb-4">
             <Label 
               htmlFor="email"
@@ -163,7 +184,8 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
           </LabelInputContainer>
 
           <LitUpButton
-            className="w-38 flex items-center justify-center gap-2"
+            className="flex items-center justify-center gap-2"
+            wrapperClassName="max-w-full w-full"
             type="submit"
             disabled={pending}
           >
@@ -179,6 +201,14 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
               </>
             }
           </LitUpButton>
+
+          <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-emerald-300 to-transparent" />
+
+          <nav className="w-full flex flex-col gap-2">
+            {links.map(link => (
+              <CopyLink key={link.link} icon={link.icon} link={link.link} />
+            ))}
+          </nav>
         </form>
       </BackgroundGradient>
     </motion.aside>
@@ -198,3 +228,21 @@ const LabelInputContainer = ({
     </div>
   );
 };
+
+const CopyLink = ({
+  icon,
+  link
+}: {
+  icon: React.ReactNode;
+  link: string;
+}) => (
+  <div className='flex justify-between items-center'>
+    <span className="flex gap-2 font-medium">
+      {icon}
+      {link}
+    </span>
+    <LitUpButton fullyRounded>
+      <IconCopy className='shrink-0' />
+    </LitUpButton>
+  </div>
+)
