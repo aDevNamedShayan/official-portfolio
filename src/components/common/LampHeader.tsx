@@ -14,7 +14,7 @@ export function LampHeader({ children }: { children: string; }) {
           duration: 0.8,
           ease: [.32, .72, 0, .95],
         }}
-        className="bg-gradient-to-br from-neutral-800 dark:from-slate-50 to-neutral-300 dark:to-slate-500 py-4 bg-clip-text text-center text-4xl md:text-6xl font-medium tracking-tight text-transparent"
+        className="bg-gradient-to-b from-lampGreen dark:from-lampGreen to-neutral-600 dark:to-neutral-300 py-4 bg-clip-text text-center text-4xl md:text-6xl font-medium tracking-tight text-transparent"
       >
         {children}
       </motion.h1>

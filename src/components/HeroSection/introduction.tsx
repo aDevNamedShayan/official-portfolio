@@ -28,12 +28,9 @@ export function Introduction() {
         <LitUpLink href='https://github.com/aDevNamedShayan' variants={HSChildVariants}>
           <IconBrandGithub className='shrink-0'/>
         </LitUpLink>
-        <LitUpLink href='https://www.linkedin.com/in/shayan-noori-4b24ab347' variants={HSChildVariants}>
+        <LitUpLink href='https://linkedin.com/in/adevnamedshayan' variants={HSChildVariants}>
           <IconBrandLinkedin className='shrink-0'/>
         </LitUpLink>
-        {/* <LitUpLink variants={childVariants} className="flex items-center justify-center gap-2">
-          <IconDownload className='shrink-0'/>
-        </LitUpLink> */}
       </div>
     </motion.div>
   );

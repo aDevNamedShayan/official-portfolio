@@ -20,7 +20,7 @@ export const LampContainer = ({
       <div className="relative flex w-full h-full flex-1 items-center justify-center isolate z-0 ">
 
         {/* Base Reflection */}
-        <div className="absolute top-[50%] -translate-y-1/2 inset-auto z-1 h-36 w-[28rem] rounded-full bg-teal-500 opacity-50 blur-3xl"></div>
+        <div className="absolute top-[50%] -translate-y-1/2 inset-auto z-1 h-36 w-[28rem] rounded-full bg-teal-600 opacity-50 blur-3xl"></div>
 
         {/* Lamp Reflection */}
         <motion.div
@@ -31,7 +31,7 @@ export const LampContainer = ({
             duration: 0.8,
             ease: "easeInOut",
           }}
-          className="absolute top-4/10 -translate-y-1/2 inset-auto h-36 w-64 rounded-full bg-emerald-400 blur-2xl"
+          className="absolute top-4/10 -translate-y-1/2 inset-auto h-36 w-64 rounded-full bg-lampGreen blur-2xl"
         ></motion.div>
 
         {/* The Lamp */}
@@ -43,7 +43,7 @@ export const LampContainer = ({
             duration: 0.8,
             ease: "easeInOut",
           }}
-          className="absolute top-4/10 -translate-y-1/2 inset-auto z-1 h-0.5 rounded-full w-[30rem] bg-emerald-400"
+          className="absolute top-4/10 -translate-y-1/2 inset-auto z-1 h-0.5 rounded-full w-[30rem] bg-lampGreen"
         ></motion.div>
 
         {/* Upper section's Lamp Reflection dimmer */}

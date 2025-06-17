@@ -7,7 +7,9 @@ import { cn } from "@/lib/utils";
 import {
   IconAlertTriangle,
   IconBrandGithub,
+  IconBrandLinkedin,
   IconCopy,
+  IconCopyCheck,
   IconLoader2,
   IconMail,
   IconPhone,
@@ -19,21 +21,27 @@ import { AnimatePresence, motion } from "motion/react";
 import { FadeWithBlur } from "@/lib/utils/MotionVariants";
 import { BackgroundGradient } from "../background-gradient";
 import { useTranslations } from "next-intl";
-import { HoverBorderGradient } from "../hover-border-gradient";
-import { LitUpLink } from "@/components/common/LitUpLink";
 
 const links = [
   {
+    id: 1,
     icon: <IconPhone className="shrink-0 text-gumGreen"/>,
     link: '+98 993 779 4928',
   },
   {
+    id: 2,
     icon: <IconMail className="shrink-0 text-gumGreen"/>,
     link: 'nri.shayan@gmail.com',
   },
   {
+    id: 3,
     icon: <IconBrandGithub className="shrink-0 text-gumGreen"/>,
     link: 'github.com/aDevNamedShayan',
+  },
+  {
+    id: 4,
+    icon: <IconBrandLinkedin className="shrink-0 text-gumGreen"/>,
+    link: 'linkedin.com/in/adevnamedshayan',
   },
 ]
 
@@ -68,18 +76,18 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
       console.log('validatedParams', validatedParams)
       setError(null)
       setPending(true)
-      // const res = await emailjs.send(serviceID, templateID, validatedParams, userID)
+      const res = await emailjs.send(serviceID, templateID, validatedParams, userID)
 
-      // if(res.status === 200) {
-      //   setPending(false)
-      //   setEmailSent(true)
-      // }
-
-      await new Promise(resolve => setTimeout(() => {
-        resolve();
+      if(res.status === 200) {
         setPending(false)
         setEmailSent(true)
-      }, 2000))
+      }
+
+      // await new Promise(resolve => setTimeout(() => {
+      //   resolve();
+      //   setPending(false)
+      //   setEmailSent(true)
+      // }, 2000))
 
     } catch (error) {
       setPending(false)
@@ -104,7 +112,7 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
           {t('touch')}
         </h2>
 
-        <form className="my-4 lg:my-8" onSubmit={handleSubmit}>
+        <form className="mt-4 lg:mt-8" onSubmit={handleSubmit}>
           <LabelInputContainer className="mb-4">
             <Label 
               htmlFor="email"
@@ -201,15 +209,15 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
               </>
             }
           </LitUpButton>
-
-          <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-emerald-300 to-transparent" />
-
-          <nav className="w-full flex flex-col gap-2">
-            {links.map(link => (
-              <CopyLink key={link.link} icon={link.icon} link={link.link} />
-            ))}
-          </nav>
         </form>
+
+        <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-emerald-300 to-transparent" />
+
+        <nav className="w-full flex flex-col gap-2">
+          {links.map(link => (
+            <CopyLink key={link.id} id={link.id} icon={link.icon} link={link.link} />
+          ))}
+        </nav>
       </BackgroundGradient>
     </motion.aside>
   );
@@ -230,19 +238,41 @@ const LabelInputContainer = ({
 };
 
 const CopyLink = ({
+  id,
   icon,
-  link
+  link,
 }: {
+  id: number;
   icon: React.ReactNode;
   link: string;
-}) => (
-  <div className='flex justify-between items-center'>
-    <span className="flex gap-2 font-medium">
-      {icon}
-      {link}
-    </span>
-    <LitUpButton fullyRounded>
-      <IconCopy className='shrink-0' />
-    </LitUpButton>
-  </div>
-)
+}) => {
+  const [copied, setCopied] = useState<number| null>(null)
+
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text)
+
+    setCopied(id)
+    setTimeout(() => setCopied(null), 2000);
+  }
+  return (
+    <div className='flex justify-between items-center overflow-hidden'>
+      <span className="flex items-center gap-2 font-medium text-sm lg:text-base min-w-0">
+        {icon}
+        <span className='truncate [direction:ltr]'>
+          {link}
+        </span>
+      </span>
+      <LitUpButton 
+        fullyRounded 
+        type="button"
+        onClick={() => handleCopy(link)}
+        disabled={Boolean(copied)}
+      >
+        {copied ? 
+          <IconCopyCheck className='shrink-0' />
+        :
+          <IconCopy className='shrink-0' />
+        }
+      </LitUpButton>
+    </div>
+)}
