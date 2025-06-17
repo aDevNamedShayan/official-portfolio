@@ -16,7 +16,7 @@ export default function HomePage({ params }: { params: Promise<{locale: string}>
 
   return <main className='flex flex-col gap-10'>
     <NavDock />
-    {/* <HeroSection /> */}
+    <HeroSection />
     <SkillSection />
     <ExperienceSection />
     <ContactSection />

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @custom-variant dark (&:is(.dark *));
 
-@theme  {
+@theme {
   --color-lightBg: oklch(1 0 0);
   --color-darkBg: oklch(0.16 0.01 262.25);
   --color-gumGreen: oklch(0.851 0.2474 144.31);
