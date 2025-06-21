@@ -17,7 +17,7 @@ export function FloatingShayan() {
       initial='initial' 
       animate='animate' 
       variants={shayanVariants}
-      className="size-72 lg:size-96 animate-float transition duration-500 hover:scale-105 flex items-center"
+      className="size-72 lg:size-96 animate-float transition duration-500 hover:scale-105 flex items-center -mt-[10vh]"
     >
       <BackgroundGradient 
         containerClassName="size-full"

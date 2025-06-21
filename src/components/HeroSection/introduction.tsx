@@ -15,7 +15,7 @@ export function Introduction() {
       initial='hidden'
       animate='visible'
       transition={{ staggerChildren: .6, delayChildren: 2}}
-      className="max-w-[35rem] flex flex-col justify-center items-center lg:items-start gap-4"
+      className="max-w-[35rem] flex flex-col justify-center items-center lg:items-start gap-4 -mt-[10vh]"
     >
       <motion.span variants={HSChildVariants} className="text-black dark:text-white font-medium text-lg sm:text-xl lg:text-2xl">{t('name')}</motion.span>
       <motion.h1 variants={HSChildVariants} className="font-bold text-3xl sm:text-4xl lg:text-5xl text-nowrap">{t('role')}</motion.h1>
@@ -25,10 +25,10 @@ export function Introduction() {
           {t('download')}
           <IconDownload className='shrink-0'/>
         </LitUpButton>
-        <LitUpLink href='https://github.com/aDevNamedShayan' variants={HSChildVariants}>
+        <LitUpLink href='https://github.com/aDevNamedShayan' target="_blank" variants={HSChildVariants}>
           <IconBrandGithub className='shrink-0'/>
         </LitUpLink>
-        <LitUpLink href='https://linkedin.com/in/adevnamedshayan' variants={HSChildVariants}>
+        <LitUpLink href='https://linkedin.com/in/adevnamedshayan' target="_blank" variants={HSChildVariants}>
           <IconBrandLinkedin className='shrink-0'/>
         </LitUpLink>
       </div>

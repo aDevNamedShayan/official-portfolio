@@ -24,7 +24,7 @@
     }
   };
 
-  --animate-float: float 4s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
 
   @keyframes float {
     0%,

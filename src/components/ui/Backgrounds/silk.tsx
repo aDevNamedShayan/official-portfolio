@@ -1,8 +1,7 @@
-/* eslint-disable react/no-unknown-property */
-
 'use client'
 
 import React, { forwardRef, useMemo, useRef, useLayoutEffect } from "react";
+import { motion } from "motion/react";
 import { Canvas, useFrame, useThree, RootState } from "@react-three/fiber";
 import { Color, Mesh, ShaderMaterial } from "three";
 import { IUniform } from "three";
@@ -77,10 +76,10 @@ void main() {
   tex.y += 0.03 * sin(8.0 * tex.x - tOffset);
 
   float pattern = 0.6 +
-                  0.4 * sin(5.0 * (tex.x + tex.y +
-                                   cos(3.0 * tex.x + 5.0 * tex.y) +
-                                   0.02 * tOffset) +
-                           sin(20.0 * (tex.x + tex.y - 0.1 * tOffset)));
+  0.4 * sin(5.0 * (tex.x + tex.y +
+  cos(3.0 * tex.x + 5.0 * tex.y) +
+  0.02 * tOffset) +
+  sin(20.0 * (tex.x + tex.y - 0.1 * tOffset)));
 
   vec4 col = vec4(uColor, 1.0) * vec4(pattern) - rnd / 15.0 * uNoiseIntensity;
   col.a = 1.0;
@@ -136,7 +135,7 @@ export interface SilkProps {
   rotation?: number;
 }
 
-const Silk: React.FC<SilkProps> = ({
+export const Silk: React.FC<SilkProps> = ({
   speed = 5,
   scale = 1,
   color = "#7B7481",
@@ -158,10 +157,19 @@ const Silk: React.FC<SilkProps> = ({
   );
 
   return (
-    <Canvas dpr={[1, 2]} frameloop="always" className="!absolute">
-      <SilkPlane ref={meshRef} uniforms={uniforms} />
-    </Canvas>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 2 }}
+      className="!absolute inset-0 -z-1"
+    >
+      <Canvas
+        dpr={1}
+        frameloop="always"
+        className='opacity-50 dark:opacity-60 transition-opacity duration-500'
+      >
+        <SilkPlane ref={meshRef} uniforms={uniforms} />
+      </Canvas>
+    </motion.div>
   );
 };
-
-export default Silk;

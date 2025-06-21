@@ -43,7 +43,8 @@ export function IdCard() {
         dpr={dpr}
         camera={{ position: [0, 0, 18], fov: 25 }} 
         className='!w-full !h-screen min-h-150 touch-pan-down'
-        frameloop='demand'
+        frameloop='always'
+        // frameloop='demand'
         // performance={{ min: .5, debounce: [100, 200] }}
         // id='cardCanvas'
         // style={{ touchAction: 'none' }}
@@ -120,7 +121,6 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
       vec.add(dir.multiplyScalar(state.camera.position.length()))
       ;[card, j1, j2, j3, fixed].forEach((ref) => ref.current?.wakeUp())
       card.current?.setNextKinematicTranslation({ x: vec.x - dragged.x, y: vec.y - dragged.y, z: vec.z - dragged.z })
-      // card.current.style.touchAction = 'none'
     }
     if (fixed.current) {
       ;[j1, j2].forEach((ref) => {
@@ -147,9 +147,16 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
   console.log(screenWidth)
   const isLarge = screenWidth >= 1024
 
+
+  const handlePointerUp = (e: ThreeEvent<PointerEvent>) => (e.target?.releasePointerCapture(e.pointerId), drag(false))
+  const handlePointerDown = (e: ThreeEvent<PointerEvent>) => (
+    e.target?.setPointerCapture(e.pointerId), 
+    drag(new Vector3().copy(e.point).sub(vec.copy(card.current?.translation())))
+  )
+  
   return (
     <>
-      <group position={isLarge ? [ -4, 4, 0 ] : [ 0, 4, 0 ]}>
+      <group position={isLarge ? [ -3.5, 4, 0 ] : [ 0, 4, 0 ]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
         <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />
@@ -167,11 +174,8 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
             position={isLarge ? [0, -3, -0.05] : [0, -1.5, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
-            onPointerUp={(e: ThreeEvent<PointerEvent>) => ((e.target as HTMLElement)?.releasePointerCapture(e.pointerId), drag(false))}
-            onPointerDown={(e: ThreeEvent<PointerEvent>) => (
-              (e.target as HTMLElement)?.setPointerCapture(e.pointerId), 
-              drag(new Vector3().copy(e.point).sub(vec.copy(card.current?.translation())))
-            )}
+            onPointerUp={handlePointerUp}
+            onPointerDown={handlePointerDown}
           />
         </RigidBody>
       </group>
