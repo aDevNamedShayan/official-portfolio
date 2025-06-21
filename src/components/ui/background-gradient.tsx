@@ -77,7 +77,8 @@ export const BackgroundGradient = ({
           className
         )}
       >
-          {children}</div>
+        {children}
+      </div>
     </div>
   );
 };

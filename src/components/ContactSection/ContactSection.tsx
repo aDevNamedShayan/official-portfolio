@@ -1,5 +1,3 @@
-'use client'
-
 import { useTranslations } from "next-intl";
 import { LampHeader } from "../common/LampHeader";
 import { IdCard } from "../ui/IdCard/3d-card";

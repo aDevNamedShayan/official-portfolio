@@ -1,7 +1,4 @@
-"use client"
-
 import { Root } from "@radix-ui/react-separator"
-
 import { cn } from "@/lib/utils"
 
 export function Separator({
