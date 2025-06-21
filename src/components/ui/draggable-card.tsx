@@ -74,10 +74,8 @@ export const DraggableCardBody = ({
 
     updateConstraints();
 
-    // Add resize listener
     window.addEventListener("resize", updateConstraints);
 
-    // Clean up
     return () => {
       window.removeEventListener("resize", updateConstraints);
     };

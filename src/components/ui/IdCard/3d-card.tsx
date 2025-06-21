@@ -44,10 +44,6 @@ export function IdCard() {
         camera={{ position: [0, 0, 18], fov: 25 }} 
         className='!w-full !h-screen min-h-150 touch-pan-down'
         frameloop='always'
-        // frameloop='demand'
-        // performance={{ min: .5, debounce: [100, 200] }}
-        // id='cardCanvas'
-        // style={{ touchAction: 'none' }}
       >
         <PerformanceMonitor onIncline={() => setDpr(1.5)} onDecline={() => setDpr(1)}>
           <ambientLight intensity={Math.PI} />
@@ -99,7 +95,6 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
     c.curveType = 'chordal'
     return c
   }, [])
-  // const [curve] = useState(() => new CatmullRomCurve3([new Vector3(), new Vector3(), new Vector3(), new Vector3()]))
   const [hovered, hover] = useState(false)
 
   useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1])
@@ -144,7 +139,6 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
   }, [texture])
 
   const screenWidth = window.innerWidth
-  console.log(screenWidth)
   const isLarge = screenWidth >= 1024
 
 

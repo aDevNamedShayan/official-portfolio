@@ -84,7 +84,6 @@ const FloatingDockMobile = ({
               </motion.div>
             ))}
             <motion.div
-              // key={item.title}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10, transition: { delay: .15 } }}
@@ -94,7 +93,6 @@ const FloatingDockMobile = ({
               <Separator orientation="horizontal" />
             </motion.div>
             <motion.div
-              // key={item.title}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10, transition: { delay: .2 } }}
@@ -119,7 +117,6 @@ const FloatingDockMobile = ({
                 </button>
             </motion.div>
             <motion.div
-              // key={item.title}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10, transition: { delay: .25 } }}

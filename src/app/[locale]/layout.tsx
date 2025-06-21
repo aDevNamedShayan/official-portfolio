@@ -31,7 +31,7 @@ export default function RootLayout({
   const { locale } = use(params);
   if (!hasLocale(routing.locales, locale)) notFound();
 
-  // Enable static rendering
+  // Enable static rendering (SSG)
   setRequestLocale(locale);
 
   const isEn = locale === 'en'

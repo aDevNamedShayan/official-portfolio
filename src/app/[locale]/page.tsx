@@ -11,7 +11,7 @@ const ContactSection = dynamic(() => import('@/components/ContactSection/Contact
 export default function HomePage({ params }: { params: Promise<{locale: string}> }) {
   const { locale } = use(params)
   
-  // Enable static rendering
+  // Enable static rendering (SSG)
   setRequestLocale(locale);
 
   return <main className='flex flex-col gap-10'>

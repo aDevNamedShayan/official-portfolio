@@ -82,7 +82,6 @@ const items = [
     logoClassName: 'dark:invert',
     iconClassName: 'invert dark:invert-0',
     className: "absolute top-[49%] -translate-y-1/2 left-[48%] -translate-x-1/2 rotate-[8deg]",
-    // className: "absolute top-40 left-[39%] rotate-[8deg]",
   },
 ];
 

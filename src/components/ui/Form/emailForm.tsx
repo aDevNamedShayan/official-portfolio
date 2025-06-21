@@ -73,7 +73,6 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
 
       const validatedParams = emailParamsSchema.parse(emailParams)
 
-      console.log('validatedParams', validatedParams)
       setError(null)
       setPending(true)
       const res = await emailjs.send(serviceID, templateID, validatedParams, userID)
