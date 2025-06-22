@@ -11,7 +11,13 @@
     "drag": "drag the cards"
   },
   "ExpSection": {
-    "header": "My Experience"
+    "header": "My Experience",
+    "apancoTitle": "Front End Developer · Apanco",
+    "apancoTimeline": "February 2023 - May 2025",
+    "apancoDescription": "As a Front-end Developer at Apanco, I built a web app with React.js to manage teachers, students, and courses. I integrated over 150 RESTful APIs using TanStack Query for smoother data handling and built a scalable front-end architecture for easier maintenance. I worked closely with design and back-end teams to deliver polished UI updates and resolved a memory leak that improved app stability. Agile collaboration helped us ship features more efficiently.",
+    "sepehrTitle": "Junior React JS Developer · Sepehregan Academy",
+    "sepehrTimeline": "July 2022 - January 2023",
+    "sepehrDescription": "As a Front-end Developer at Sepehregan Academy, I developed a beginner-friendly monitoring web app using React.js, focusing on reusable components to improve efficiency and reduce code duplication. I optimized performance by leveraging Context API and TanStack Query, decreasing latency on low-end devices. I collaborated with designers to build responsive interfaces using Tailwind CSS and created an engaging admin panel with Vuexy admin panel template and React-strap, which lead to increased user interaction."
   },
   "ContactSection": {
     "header": "Contact me",

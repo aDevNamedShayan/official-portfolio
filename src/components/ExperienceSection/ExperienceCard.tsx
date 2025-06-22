@@ -15,10 +15,10 @@ export function ExperienceCard({ item }: { item: ExperienceItemInter }) {
       transition={{ duration: 1, ease: 'easeOut' }}
     >
       <header className="z-[1]">
-        <h1 className="font-bold">
+        <h1 className="font-bold text-sm lg:text-base">
           {item.title}
         </h1>
-        <p className="text-neutral-400 dark:text-neutral-500 text-sm">{item.timeline}</p>
+        <p className="text-neutral-400 dark:text-neutral-500 text-xs lg:text-sm">{item.timeline}</p>
       </header>
 
       <p className="text-sm lg:text-base z-[1]">
@@ -34,7 +34,7 @@ export function ExperienceCard({ item }: { item: ExperienceItemInter }) {
         {item.technologies.map((tech) => (
           <motion.li 
             key={tech}
-            className='px-2 py-0.5 bg-lime-500 rounded-lg text-white text-sm font-bold'
+            className='px-2 py-0.5 bg-gumGreen dark:bg-gumGreen/80 rounded-lg text-white text-xs font-bold'
             variants={ECChildVariants}
           >
             {tech}

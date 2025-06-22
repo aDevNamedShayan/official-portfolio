@@ -3,29 +3,24 @@ import { LampHeader } from "../common/LampHeader";
 import { TracingBeam } from "../ui/trancing-beam";
 import { ExperienceCard } from "./ExperienceCard";
 
-const ExperienceItems = [
-  {
-    title: 'Full-Stack Developer · WebKade',
-    timeline: 'June 2023 - January 2024',
-    description: 'As a Full Stack Web Developer at Webkade, I design and maintain dynamic web applications, ensuring seamless user experiences and efficient functionality. I use Next.js and TailwindCSS for responsive front-end interfaces and Node.js, PostgreSQL, and Drizzle ORM for scalable back-end solutions. Collaborating with cross-functional teams, I deliver high-quality applications tailored to client and user needs.',
-    technologies: [ 'TypeScript', 'React', 'Next.js', 'Tailwind CSS' ]
-  },
-  {
-    title: 'Full-Stack Developer · WebKade',
-    timeline: 'June 2023 - January 2024',
-    description: 'As a Full Stack Web Developer at Webkade, I design and maintain dynamic web applications, ensuring seamless user experiences and efficient functionality. I use Next.js and TailwindCSS for responsive front-end interfaces and Node.js, PostgreSQL, and Drizzle ORM for scalable back-end solutions. Collaborating with cross-functional teams, I deliver high-quality applications tailored to client and user needs.',
-    technologies: [ 'TypeScript', 'React', 'Next.js', 'Tailwind CSS', 'react-hook-form', 'TRPC', 'Drizzle ORM' ]
-  },
-  {
-    title: 'Full-Stack Developer · WebKade',
-    timeline: 'June 2023 - January 2024',
-    description: 'As a Full Stack Web Developer at Webkade, I design and maintain dynamic web applications, ensuring seamless user experiences and efficient functionality. I use Next.js and TailwindCSS for responsive front-end interfaces and Node.js, PostgreSQL, and Drizzle ORM for scalable back-end solutions. Collaborating with cross-functional teams, I deliver high-quality applications tailored to client and user needs.',
-    technologies: [ 'TypeScript', 'React', 'Next.js', 'Tailwind CSS', 'react-hook-form', 'TRPC', 'Drizzle ORM' ]
-  },
-];
 
 export function ExperienceSection() {
   const t = useTranslations('ExpSection')
+  
+  const ExperienceItems = [
+    {
+      title: t('apancoTitle'),
+      timeline: t('apancoTimeline'),
+      description: t('apancoDescription'),
+      technologies: [ 'React.js', 'TypeScript', 'Tailwind CSS', 'TanStack Query', 'Formik', 'Yup', 'Vite', 'Zustand' ]
+    },
+    {
+      title: t('sepehrTitle'),
+      timeline: t('sepehrTimeline'),
+      description: t('sepehrDescription'),
+      technologies: [ 'React.js', 'Tailwind CSS', 'TanStack Query', 'React Strap', 'React-hook-form', 'Zod', 'Vite', 'Context API' ]
+    },
+  ];
 
   return (
     <section id="experiences" className="flex flex-col gap-10">
