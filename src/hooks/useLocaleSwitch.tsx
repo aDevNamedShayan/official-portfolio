@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { useLocale } from "next-intl";
 import { redirect } from "@/i18n/navigation";
-import Iran from '@/assets/Languages/fa.svg'
-import USA from '@/assets/Languages/en.svg'
+import Iran from '@/../public/Images/Languages/fa.svg'
+import USA from '@/../public/Images/Languages/en.svg'
 
 export function useLocaleSwitch() {
   const locale = useLocale()
