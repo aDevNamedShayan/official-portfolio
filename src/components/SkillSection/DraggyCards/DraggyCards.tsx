@@ -25,72 +25,76 @@ import ZodLogo from '@/assets/Zod/Logo.svg'
 import GitIcon from '@/assets/Git/Icon.svg'
 import GitLogo from '@/assets/Git/Logo.svg'
 import ThreeIcon from '@/assets/Three.js/Icon.svg'
+import ThreeLogo from '@/assets/Three.js/Logo.png'
+import MotionIcon from '@/assets/Motion/Icon.svg'
+import MotionLogo from '@/assets/Motion/Logo.svg'
 
 const items = [
   {
     id: '1',
-    logo: GitLogo,
-    icon: GitIcon,
-    className: "absolute top-[40%] -translate-y-1/2 left-[49%] -translate-x-1/2 rotate-[-4deg]",
-  },
-  {
-    id: '1',
-    logo: GitLogo,
-    icon: ThreeIcon,
-    className: "absolute top-[40%] -translate-y-1/2 left-[49%] -translate-x-1/2 rotate-[-4deg]",
-    iconClassName: 'dark:invert'
-  },
-  {
-    id: '1',
-    logo: GitLogo,
-    icon: GitIcon,
-    className: "absolute top-[40%] -translate-y-1/2 left-[49%] -translate-x-1/2 rotate-[-4deg]",
+    logo: MotionLogo,
+    icon: MotionIcon,
+    className: "absolute top-[53%] -translate-y-1/2 left-[33%] -translate-x-1/2 rotate-[2deg]",
   },
   {
     id: '2',
+    logo: ThreeLogo,
+    icon: ThreeIcon,
+    className: "absolute top-[48%] -translate-y-1/2 right-[37%] translate-x-1/2 rotate-[5deg]",
+    iconClassName: 'dark:invert',
+    logoClassName: 'object-contain dark:invert',
+  },
+  {
+    id: '3',
+    logo: GitLogo,
+    icon: GitIcon,
+    className: "absolute top-[40%] -translate-y-1/2 left-[49%] -translate-x-1/2 rotate-[-4deg]",
+  },
+  {
+    id: '4',
     logo: ZodLogo,
     icon: ZodIcon,
     className: "absolute top-[39%] -translate-y-1/2 right-[33%] translate-x-1/2 rotate-[-8deg]",
   },
   {
-    id: '3',
+    id: '5',
     logo: ReactHookFormLogo,
     icon: ReactHookFormIcon,
     className: "absolute top-[35%] -translate-y-1/2 left-[33%] -translate-x-1/2 rotate-[4deg]",
   },
   {
-    id: '4',
+    id: '6',
     logo: TanstackQueryLogo,
     icon: TanstackQueryIcon,
-    logoClassName: 'object-contain',
     className: "absolute top-[60%] -translate-y-1/2 left-[60%] -translate-x-1/2 rotate-[-7deg]",
+    logoClassName: 'object-contain',
   },
   {
-    id: '5',
+    id: '7',
     logo: TailwindLogo,
     icon: TailwindIcon,
     className: "absolute top-[60%] -translate-y-1/2 left-[43%] -translate-x-1/2 rotate-[5deg]",
   },
   {
-    id: '6',
+    id: '8',
     logo: TypeScriptIcon,
     icon: TypeScriptIcon,
     className: "absolute top-[48%] -translate-y-1/2 left-[65%] -translate-x-1/2 rotate-[10deg]",
   },
   {
-    id: '7',
+    id: '9',
     logo: JavaScriptIcon,
     icon: JavaScriptIcon,
     className: "absolute top-[53%] -translate-y-1/2 left-[30%] -translate-x-1/2 rotate-[2deg]",
   },
   {
-    id: '8',
+    id: '10',
     logo: ReactLogo,
     icon: ReactIcon,
     className: "absolute top-[40%] -translate-y-1/2 left-[30%] -translate-x-1/2 rotate-[-5deg]",
   },
   {
-    id: '9',
+    id: '11',
     logo: NextLogo,
     icon: NextIcon,
     className: "absolute top-[49%] -translate-y-1/2 left-[48%] -translate-x-1/2 rotate-[8deg]",
