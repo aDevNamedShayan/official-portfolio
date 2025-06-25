@@ -1,15 +1,8 @@
 'use client'
 
-import { AnimatePresence, HTMLMotionProps, motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/lib/utils";
-
-interface LitUpBtnProps extends HTMLMotionProps<"button"> {
-  children: React.ReactNode;
-  className?: string;
-  wrapperClassName?: string;
-  disabled?: boolean;
-  fullyRounded?: boolean;
-}
+import { LitUpBtnProps } from "@/types/types";
 
 export function LitUpButton({ children, className, wrapperClassName, disabled = false, fullyRounded = false, ...props }: LitUpBtnProps) {
   return (

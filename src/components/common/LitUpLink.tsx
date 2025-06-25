@@ -1,15 +1,10 @@
 'use client'
 
-import { HTMLMotionProps, motion } from "motion/react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { LitUpLinkProps } from "@/types/types";
 
-interface LitUpBtnProps extends HTMLMotionProps<"a"> {
-  children: React.ReactNode;
-  className?: string;
-  wrapperClassName?: string;
-}
-
-export function LitUpLink({ children, wrapperClassName, ...props }: LitUpBtnProps) {
+export function LitUpLink({ children, wrapperClassName, ...props }: LitUpLinkProps) {
   return (
     <motion.a
       className={cn(

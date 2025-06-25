@@ -2,8 +2,9 @@
 
 import React, { forwardRef, useMemo, useRef, useLayoutEffect } from "react";
 import { Canvas, useFrame, useThree, RootState } from "@react-three/fiber";
-import { Color, Mesh, ShaderMaterial, IUniform } from "three";
+import { Color, Mesh, ShaderMaterial } from "three";
 import { motion } from "motion/react";
+import { SilkPlaneProps, SilkProps, SilkUniforms } from "@/types/types";
 
 type NormalizedRGB = [number, number, number];
 
@@ -14,20 +15,6 @@ const hexToNormalizedRGB = (hex: string): NormalizedRGB => {
   const b = parseInt(clean.slice(4, 6), 16) / 255;
   return [r, g, b];
 };
-
-interface UniformValue<T = number | Color> {
-  value: T;
-}
-
-interface SilkUniforms {
-  uSpeed: UniformValue<number>;
-  uScale: UniformValue<number>;
-  uNoiseIntensity: UniformValue<number>;
-  uColor: UniformValue<Color>;
-  uRotation: UniformValue<number>;
-  uTime: UniformValue<number>;
-  [uniform: string]: IUniform;
-}
 
 const vertexShader = `
 varying vec2 vUv;
@@ -86,10 +73,6 @@ void main() {
 }
 `;
 
-interface SilkPlaneProps {
-  uniforms: SilkUniforms;
-}
-
 const SilkPlane = forwardRef<Mesh, SilkPlaneProps>(function SilkPlane(
   { uniforms },
   ref
@@ -125,14 +108,6 @@ const SilkPlane = forwardRef<Mesh, SilkPlaneProps>(function SilkPlane(
   );
 });
 SilkPlane.displayName = "SilkPlane";
-
-export interface SilkProps {
-  speed?: number;
-  scale?: number;
-  color?: string;
-  noiseIntensity?: number;
-  rotation?: number;
-}
 
 export const Silk: React.FC<SilkProps> = ({
   speed = 5,

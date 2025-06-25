@@ -5,10 +5,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import { useMotionTemplate, useMotionValue, motion } from "motion/react";
-
-export interface InputProps extends React.InputHTMLAttributes<HTMLElement> {
-  is?: 'input' | 'textarea';
-}
+import { InputProps } from "@/types/types";
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, is='input', ...props }, ref) => {

@@ -9,6 +9,7 @@ import React, { useMemo, useRef } from "react";
 import { Mesh, Vector3, Vector2, ShaderMaterial, GLSL3, CustomBlending, SrcAlphaFactor, OneFactor } from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { cn } from "@/lib/utils";
+import { CanvasRevealEffectProps, ShaderProps, Uniforms } from "@/types/types";
 
 export const CanvasRevealEffect = ({
   animationSpeed = 0.4,
@@ -17,18 +18,7 @@ export const CanvasRevealEffect = ({
   containerClassName,
   dotSize,
   showGradient = true,
-}: {
-  /**
-   * 0.1 - slower
-   * 1.0 - faster
-   */
-  animationSpeed?: number;
-  opacities?: number[];
-  colors?: number[][];
-  containerClassName?: string;
-  dotSize?: number;
-  showGradient?: boolean;
-}) => {
+}: CanvasRevealEffectProps) => {
   return (
     <div className={cn("h-full relative bg-white w-full", containerClassName)}>
       <div className="h-full w-full">
@@ -53,15 +43,6 @@ export const CanvasRevealEffect = ({
     </div>
   );
 };
-
-interface DotMatrixProps {
-  colors?: number[][];
-  opacities?: number[];
-  totalSize?: number;
-  dotSize?: number;
-  shader?: string;
-  center?: ("x" | "y")[];
-}
 
 const DotMatrix: React.FC<DotMatrixProps> = ({
   colors = [[0, 0, 0]],
@@ -181,12 +162,6 @@ const DotMatrix: React.FC<DotMatrixProps> = ({
   );
 };
 
-type Uniforms = {
-  [key: string]: {
-    value: number[] | number[][] | number;
-    type: string;
-  };
-};
 const MyShaderMaterial = ({
   source,
   uniforms,
@@ -303,14 +278,3 @@ const Shader: React.FC<ShaderProps> = ({ source, uniforms, maxFps = 60 }) => {
     </Canvas>
   );
 };
-
-interface ShaderProps {
-  source: string;
-  uniforms: {
-    [key: string]: {
-      value: number[] | number[][] | number;
-      type: string;
-    };
-  };
-  maxFps?: number;
-}
