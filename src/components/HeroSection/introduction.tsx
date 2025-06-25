@@ -19,7 +19,7 @@ export function Introduction() {
     >
       <motion.span variants={HSChildVariants} className="text-black dark:text-white font-medium text-lg sm:text-xl lg:text-2xl">{t('name')}</motion.span>
       <motion.h1 variants={HSChildVariants} className="font-bold text-3xl sm:text-4xl lg:text-5xl text-nowrap">{t('role')}</motion.h1>
-      <motion.span variants={HSChildVariants} className='text-center lg:text-start'>{t('introduction')}</motion.span>
+      <motion.span variants={HSChildVariants} className='text-center lg:text-start px-4 sm:px-0'>{t('introduction')}</motion.span>
       <div className="flex items-center gap-8">
         <LitUpButton variants={HSChildVariants} className="flex items-center justify-center gap-2">
           {t('download')}

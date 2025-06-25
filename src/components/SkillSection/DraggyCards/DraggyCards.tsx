@@ -5,9 +5,11 @@ import { DraggableCardBody, DraggableCardContainer } from "@/components/ui/dragg
 import { cn } from "@/lib/utils";
 import { GridBackground } from "@/components/ui/Backgrounds/grid-background";
 import { caveat, harmattan } from "@/styles/fonts";
+import { useLocaleDetector } from "@/hooks/useLocaleDetector";
+import { CardSymbol } from "./CardSymbol";
 
-import NextIcon from '@/assets/NextJs/Icon.svg'
-import NextLogo from '@/assets/NextJs/Logo.svg'
+import NextIcon from '@/assets/Next.js/Icon.svg'
+import NextLogo from '@/assets/Next.js/Logo.svg'
 import JavaScriptIcon from '@/assets/JavaScript/Icon.svg'
 import TypeScriptIcon from '@/assets/TypeScript/Icon.svg'
 import ReactIcon from '@/assets/React/Icon.svg'
@@ -22,10 +24,22 @@ import ZodIcon from '@/assets/Zod/Icon.svg'
 import ZodLogo from '@/assets/Zod/Logo.svg'
 import GitIcon from '@/assets/Git/Icon.svg'
 import GitLogo from '@/assets/Git/Logo.svg'
-import { useLocaleDetector } from "@/hooks/useLocaleDetector";
-import { CardSymbol } from "./CardSymbol";
+import ThreeIcon from '@/assets/Three.js/Icon.svg'
 
 const items = [
+  {
+    id: '1',
+    logo: GitLogo,
+    icon: GitIcon,
+    className: "absolute top-[40%] -translate-y-1/2 left-[49%] -translate-x-1/2 rotate-[-4deg]",
+  },
+  {
+    id: '1',
+    logo: GitLogo,
+    icon: ThreeIcon,
+    className: "absolute top-[40%] -translate-y-1/2 left-[49%] -translate-x-1/2 rotate-[-4deg]",
+    iconClassName: 'dark:invert'
+  },
   {
     id: '1',
     logo: GitLogo,
@@ -79,9 +93,9 @@ const items = [
     id: '9',
     logo: NextLogo,
     icon: NextIcon,
+    className: "absolute top-[49%] -translate-y-1/2 left-[48%] -translate-x-1/2 rotate-[8deg]",
     logoClassName: 'dark:invert',
     iconClassName: 'invert dark:invert-0',
-    className: "absolute top-[49%] -translate-y-1/2 left-[48%] -translate-x-1/2 rotate-[8deg]",
   },
 ];
 

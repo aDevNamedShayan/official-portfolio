@@ -45,7 +45,7 @@ export function IdCard() {
         className='!w-full !h-screen min-h-150 touch-pan-down'
         frameloop='always'
       >
-        <PerformanceMonitor onIncline={() => setDpr(1.5)} onDecline={() => setDpr(1)}>
+        <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(1)}>
           <ambientLight intensity={Math.PI} />
           <Physics 
             interpolate 

@@ -248,14 +248,14 @@ const CopyLink = ({
 }) => {
   const [copied, setCopied] = useState<number| null>(null)
 
-  const handleCopy = (text: string) => {
-    navigator.clipboard.writeText(text)
+  const handleCopy = async (text: string) => {
+    await navigator.clipboard.writeText(text)
 
     setCopied(id)
     setTimeout(() => setCopied(null), 2000);
   }
   return (
-    <div className='flex justify-between items-center overflow-hidden'>
+    <div className='flex justify-between items-center gap-3 overflow-hidden'>
       <span className="flex items-center gap-2 font-medium text-sm lg:text-base min-w-0">
         {icon}
         <span className='truncate [direction:ltr]'>
