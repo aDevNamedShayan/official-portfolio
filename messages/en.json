@@ -35,7 +35,7 @@
     "succDesc": "I'll get back to you as soon as possible, sit tight!",
     "succReturnBtn": "Return to the form",
     "hint": "pull my card",
-    "sendMsgErr": "Your message couldn't be delivered, please try again later!"
+    "sendMsgErr": "Your message couldn't be delivered, please try again later! (you may need to use a VPN service)"
   },
   "Nav": {
     "home": "Home",

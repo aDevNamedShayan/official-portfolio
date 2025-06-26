@@ -84,18 +84,18 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
         setEmailSent(true)
       }
 
-      // await new Promise(resolve => setTimeout(() => {
-      //   resolve();
-      //   setPending(false)
-      //   setEmailSent(true)
-      // }, 2000))
+      // await new Promise((resolve, reject) => setTimeout(() => {
+      //   reject();
+      //   // resolve();
+      //   // setPending(false)
+      //   // setEmailSent(true)
+      // }, 1000))
 
     } catch (error) {
       setPending(false)
-      console.log('error', error)
+
       if(error instanceof z.ZodError) {
         const flatError = error.flatten()
-        console.log('flatError', flatError)
         setError(flatError)
       } else {
         toast.error(t('sendMsgErr'))
