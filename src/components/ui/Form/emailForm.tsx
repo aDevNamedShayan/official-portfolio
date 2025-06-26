@@ -91,9 +91,10 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
 
     } catch (error) {
       setPending(false)
-
+      console.log('error', error)
       if(error instanceof z.ZodError) {
         const flatError = error.flatten()
+        console.log('flatError', flatError)
         setError(flatError)
       }
     }

@@ -121,7 +121,7 @@ const FloatingDockMobile = ({
                   className="flex size-10 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-900"
                 >
                   <AnimatePresence mode="wait">
-                    <motion.div 
+                    <motion.div
                       key={localeConfig.title}
                       initial={{ opacity: 0, x: '-60%' }}
                       animate={{ opacity: 1, y: 0, x: 0 }}
