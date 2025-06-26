@@ -22,6 +22,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { FadeWithBlur } from "@/lib/utils/MotionVariants";
 import { BackgroundGradient } from "../background-gradient";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 const links = [
   {
@@ -96,6 +97,8 @@ export function EmailForm({ setEmailSent }: { setEmailSent: React.Dispatch<React
         const flatError = error.flatten()
         console.log('flatError', flatError)
         setError(flatError)
+      } else {
+        toast.error(t('sendMsgErr'))
       }
     }
   };

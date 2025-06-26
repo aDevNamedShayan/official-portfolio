@@ -34,7 +34,8 @@
     "succTitle": "Message Sent",
     "succDesc": "I'll get back to you as soon as possible, sit tight!",
     "succReturnBtn": "Return to the form",
-    "hint": "pull my card"
+    "hint": "pull my card",
+    "sendMsgErr": "Your message couldn't be delivered, please try again later!"
   },
   "Nav": {
     "home": "Home",
