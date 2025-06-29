@@ -26,6 +26,7 @@ export interface LitUpLinkProps extends HTMLMotionProps<"a"> {
   children: React.ReactNode;
   className?: string;
   wrapperClassName?: string;
+  fullyRounded?: boolean;
 }
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLElement> {

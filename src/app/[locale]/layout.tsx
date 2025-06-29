@@ -45,7 +45,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body
-        className={`${isEn ? rubik.className : iranYekan.className } antialiased bg-lightBg dark:bg-darkBg overflow-x-hidden`}
+        className={`${ isEn ? rubik.className : iranYekan.className } antialiased bg-lightBg dark:bg-darkBg overflow-x-hidden`}
       >
         <Providers>
           {children}

@@ -22,7 +22,7 @@ export function LitUpButton({ children, className, wrapperClassName, disabled = 
       />
       <div 
         className={cn(
-          "px-6 py-2 bg-lightBg dark:bg-darkBg rounded-[6px] relative group transition duration-200 text-black hover:text-white dark:text-white hover:bg-transparent dark:hover:bg-transparent",
+          "px-6 py-2 bg-lightBg dark:bg-darkBg rounded-md relative group transition duration-200 text-black hover:text-white dark:text-white hover:bg-transparent dark:hover:bg-transparent",
           { 'rounded-full p-1.5' : fullyRounded }
         )}
       >
