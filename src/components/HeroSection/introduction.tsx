@@ -20,7 +20,7 @@ export function Introduction() {
       <motion.h1 variants={HSChildVariants} className="font-bold text-3xl sm:text-4xl lg:text-5xl text-nowrap">{t('role')}</motion.h1>
       <motion.span variants={HSChildVariants} className='text-center lg:text-start px-4 sm:px-0'>{t('introduction')}</motion.span>
       <div className="flex items-center gap-8">
-        <LitUpLink href="files/ShayanNoori-FrontendDeveloper.pdf" download='' variants={HSChildVariants} className="flex items-center justify-center gap-2" fullyRounded={false}>
+        <LitUpLink href="files/ShayanNoori-FrontendDeveloper.pdf" download='ShayanNoori-FrontendDeveloper' variants={HSChildVariants} className="flex items-center justify-center gap-2" fullyRounded={false}>
           {t('download')}
           <IconDownload className='shrink-0'/>
         </LitUpLink>
