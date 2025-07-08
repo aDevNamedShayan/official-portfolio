@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import { IconBrandGithub, IconBrandLinkedin, IconDownload } from "@tabler/icons-react";
 import { LitUpLink } from "../common/LitUpLink";
 import { HSChildVariants } from "@/lib/utils/MotionVariants";
+import { GITHUB_ADDRESS, LINKEDIN_ADDRESS, RESUME_PATH, RESUME_DL_NAME } from "@/lib/utils/Constants";
 
 export function Introduction() {
   const t = useTranslations('HeroSection')
@@ -20,14 +21,14 @@ export function Introduction() {
       <motion.h1 variants={HSChildVariants} className="font-bold text-3xl sm:text-4xl lg:text-5xl text-nowrap">{t('role')}</motion.h1>
       <motion.span variants={HSChildVariants} className='text-center lg:text-start px-4 sm:px-0'>{t('introduction')}</motion.span>
       <div className="flex items-center gap-8">
-        <LitUpLink href="files/ShayanNoori-FrontendDeveloper.pdf" download='ShayanNoori-FrontendDeveloper' variants={HSChildVariants} className="flex items-center justify-center gap-2" fullyRounded={false}>
+        <LitUpLink href={RESUME_PATH} download={RESUME_DL_NAME} variants={HSChildVariants} className="flex items-center justify-center gap-2" fullyRounded={false}>
           {t('download')}
           <IconDownload className='shrink-0'/>
         </LitUpLink>
-        <LitUpLink href='https://github.com/aDevNamedShayan' target="_blank" variants={HSChildVariants}>
+        <LitUpLink href={GITHUB_ADDRESS} target="_blank" variants={HSChildVariants}>
           <IconBrandGithub className='shrink-0'/>
         </LitUpLink>
-        <LitUpLink href='https://linkedin.com/in/adevnamedshayan' target="_blank" variants={HSChildVariants}>
+        <LitUpLink href={LINKEDIN_ADDRESS} target="_blank" variants={HSChildVariants}>
           <IconBrandLinkedin className='shrink-0'/>
         </LitUpLink>
       </div>

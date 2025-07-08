@@ -1,6 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { useTranslations } from "next-intl";
+import emailjs from '@emailjs/browser';
+import { toast } from "sonner";
 import { z } from "zod";
 import { Label } from "./label";
 import { Input } from "./input";
@@ -16,34 +20,31 @@ import {
   IconPhone,
   IconSend2,
 } from "@tabler/icons-react";
-import emailjs from '@emailjs/browser';
 import { LitUpButton } from "@/components/common/LitUpButton";
-import { AnimatePresence, motion } from "motion/react";
 import { FadeWithBlur } from "@/lib/utils/MotionVariants";
 import { BackgroundGradient } from "../background-gradient";
-import { useTranslations } from "next-intl";
-import { toast } from "sonner";
+import { EMAIL_ADDRESS, GITHUB_LINK, LINKEDIN_LINK, PHONE_NUMBER } from "@/lib/utils/Constants";
 
 const links = [
   {
     id: 1,
     icon: <IconPhone className="shrink-0 text-gumGreen"/>,
-    link: '+98 993 779 4928',
+    link: PHONE_NUMBER,
   },
   {
     id: 2,
     icon: <IconMail className="shrink-0 text-gumGreen"/>,
-    link: 'nri.shayan@gmail.com',
+    link: EMAIL_ADDRESS,
   },
   {
     id: 3,
     icon: <IconBrandGithub className="shrink-0 text-gumGreen"/>,
-    link: 'github.com/aDevNamedShayan',
+    link: GITHUB_LINK,
   },
   {
     id: 4,
     icon: <IconBrandLinkedin className="shrink-0 text-gumGreen"/>,
-    link: 'linkedin.com/in/adevnamedshayan',
+    link: LINKEDIN_LINK,
   },
 ]
 
