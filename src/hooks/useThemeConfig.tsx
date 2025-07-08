@@ -14,17 +14,17 @@ export function useThemeConfig() {
 
   const themeValues = {
     system: {
-      icon: <IconDeviceLaptop className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      icon: <IconDeviceLaptop className="size-full text-neutral-500 dark:text-neutral-300" />,
       title: t('sysTheme'),
       next: 'dark'
     },
     dark: {
-      icon: <IconMoon className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      icon: <IconMoon className="size-full text-neutral-500 dark:text-neutral-300" />,
       title: t('darkTheme'),
       next: 'light'
     },
     light: {
-      icon: <IconSun className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      icon: <IconSun className="size-full text-neutral-500 dark:text-neutral-300" />,
       title: t('lightTheme'),
       next: 'system'
     }
