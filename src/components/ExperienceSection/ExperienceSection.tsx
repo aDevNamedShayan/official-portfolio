@@ -9,6 +9,12 @@ export function ExperienceSection() {
   
   const ExperienceItems = [
     {
+      title: t('tradingTitle'),
+      timeline: t('tradingTimeline'),
+      description: t('tradingDescription'),
+      technologies: [ 'React.js', 'TypeScript', 'Tailwind CSS', 'TanStack Query', 'TanStack Table', 'React Hook Form', 'Zod', 'Vite', 'Jest', 'React Testing Library' ]
+    },
+    {
       title: t('apancoTitle'),
       timeline: t('apancoTimeline'),
       description: t('apancoDescription'),
@@ -18,7 +24,7 @@ export function ExperienceSection() {
       title: t('sepehrTitle'),
       timeline: t('sepehrTimeline'),
       description: t('sepehrDescription'),
-      technologies: [ 'React.js', 'Tailwind CSS', 'TanStack Query', 'React Strap', 'React-hook-form', 'Zod', 'Vite', 'Context API' ]
+      technologies: [ 'React.js', 'Tailwind CSS', 'TanStack Query', 'React Strap', 'React Hook Form', 'Zod', 'Vite', 'Context API' ]
     },
   ];
 
