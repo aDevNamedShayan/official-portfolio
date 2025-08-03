@@ -12,7 +12,7 @@ export function ExperienceSection() {
       title: t('apancoTitle'),
       timeline: t('apancoTimeline'),
       description: t('apancoDescription'),
-      technologies: [ 'React.js', 'TypeScript', 'Tailwind CSS', 'TanStack Query', 'Formik', 'Yup', 'Vite', 'Zustand' ]
+      technologies: [ 'React.js', 'TypeScript', 'Tailwind CSS', 'TanStack Query', 'Formik', 'Yup', 'Vite', 'Zustand', 'Jest', 'React Testing Library' ]
     },
     {
       title: t('sepehrTitle'),
