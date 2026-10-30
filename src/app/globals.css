@@ -1,53 +1,52 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-lightBg: oklch(1 0 0);
-  --color-darkBg: oklch(0.16 0.01 262.25);
-  --color-gumGreen: oklch(0.851 0.2474 144.31);
-  --color-lampGreen: oklch(0.7676 0.1705 157.78);
-  --shadow-input:
-    0px 2px 3px -1px rgba(0, 0, 0, 0.1),
-    0px 1px 0px 0px rgba(25, 28, 33, 0.02),
-    0px 0px 0px 1px rgba(25, 28, 33, 0.08);
+    --color-lightBg: oklch(1 0 0);
+    --color-darkBg: oklch(0.16 0.01 262.25);
+    --color-gumGreen: oklch(0.851 0.2474 144.31);
+    --color-lampGreen: oklch(0.7676 0.1705 157.78);
+    --shadow-input:
+        0px 2px 3px -1px rgba(0, 0, 0, 0.1), 0px 1px 0px 0px rgba(25, 28, 33, 0.02),
+        0px 0px 0px 1px rgba(25, 28, 33, 0.08);
 
-  --animate-gradient: gradient-wave 6s infinite;
-  --gradient-size: 200% 200%;
-  
-  @keyframes gradient-wave {
-    0%,
-    100% {
-      background-position: 0
-    }
-    50% {
-      background-position: 100%;
-    }
-  };
+    --animate-gradient: gradient-wave 6s infinite;
+    --gradient-size: 200% 200%;
 
-  --animate-float: float 6s ease-in-out infinite;
+    @keyframes gradient-wave {
+        0%,
+        100% {
+            background-position: 0;
+        }
+        50% {
+            background-position: 100%;
+        }
+    }
 
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(.5rem);
+    --animate-float: float 6s ease-in-out infinite;
+
+    @keyframes float {
+        0%,
+        100% {
+            transform: translateY(0.5rem);
+        }
+        50% {
+            transform: translateY(-0.5rem);
+        }
     }
-    50% {
-      transform: translateY(-.5rem);
-    }
-  };
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 .animate-gradient-wave {
-  background-size: var(--gradient-size);
-  animation: var(--animate-gradient);
+    background-size: var(--gradient-size);
+    animation: var(--animate-gradient);
 }
 
 @layer theme {
-  * {
-    @apply transition-colors duration-500
-  }
+    * {
+        @apply transition-colors duration-500;
+    }
 }
