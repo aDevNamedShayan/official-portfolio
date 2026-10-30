@@ -1,26 +1,23 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useTranslations } from 'next-intl'
 import { Environment, Lightformer, PerformanceMonitor, useTexture } from '@react-three/drei'
-import { Canvas, extend, GLProps, type ThreeEvent, useFrame, useThree } from '@react-three/fiber'
+import { Canvas, type GLProps, type ThreeEvent, useFrame, useThree } from '@react-three/fiber'
 import {
     BallCollider,
     CuboidCollider,
     Physics,
-    RigidBody,
-    useRopeJoint,
-    useSphericalJoint,
     type RapierRigidBody,
-    type RigidBodyProps
+    RigidBody,
+    type RigidBodyProps,
+    useRopeJoint,
+    useSphericalJoint
 } from '@react-three/rapier'
 import { IconArrowSharpTurnRight } from '@tabler/icons-react'
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
-import { CatmullRomCurve3, type Mesh, RepeatWrapping, Vector3 } from 'three'
+import { CatmullRomCurve3, RepeatWrapping, Vector2, Vector3 } from 'three'
 
 import { useLocaleDetector } from '@/hooks/useLocaleDetector'
 import { cn } from '@/lib/utils'
@@ -30,7 +27,6 @@ import bandTxt from '@/../public/IdCard/band.png'
 
 const Tag = dynamic(() => import('@/components/ui/IdCard/tag').then((mod) => mod.Tag), { ssr: false })
 
-extend({ MeshLineGeometry, MeshLineMaterial })
 // useTexture.preload(bandTxt.src)
 
 export function IdCard() {
@@ -90,14 +86,20 @@ export function IdCard() {
     )
 }
 
-function Band({ maxSpeed = 50, minSpeed = 10 }) {
+interface IBandProps {
+    maxSpeed?: number
+    minSpeed?: number
+}
+
+function Band({ maxSpeed = 50, minSpeed = 10 }: IBandProps) {
     const texture = useTexture(bandTxt.src)
-    const band = useRef<Mesh>(null)
-    const fixed = useRef<RapierRigidBody>(null)
-    const j1 = useRef<RapierRigidBody>(null)
-    const j2 = useRef<RapierRigidBody>(null)
-    const j3 = useRef<RapierRigidBody>(null)
-    const card = useRef<RapierRigidBody>(null)
+    const fixed = useRef<RapierRigidBody>(null!)
+    const j1 = useRef<RapierRigidBody>(null!)
+    const j2 = useRef<RapierRigidBody>(null!)
+    const j3 = useRef<RapierRigidBody>(null!)
+    const card = useRef<RapierRigidBody>(null!)
+    const j1Lerped = useRef(new Vector3())
+    const j2Lerped = useRef(new Vector3())
     const vec = useMemo(() => new Vector3(), [])
     const ang = useMemo(() => new Vector3(), [])
     const rot = useMemo(() => new Vector3(), [])
@@ -133,6 +135,25 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
         }
     }, [hovered, dragged])
 
+    const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1200
+    const isLarge = screenWidth >= 1024
+
+    const lineGeometry = useMemo(() => new MeshLineGeometry(), [])
+    const lineMaterial = useMemo(() => {
+        const mat = new MeshLineMaterial({
+            color: '#05df72',
+            resolution: new Vector2(width, height),
+            useMap: 1,
+            map: texture,
+            repeat: new Vector2(-3, 1),
+            lineWidth: isLarge ? 2 : 1.25,
+            opacity: 0.75
+        })
+        mat.depthTest = false
+        mat.transparent = true
+        return mat
+    }, [width, height, isLarge, texture])
+
     useFrame((state, delta) => {
         const safeDelta = Math.min(delta, 0.05)
 
@@ -152,29 +173,35 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
             const tFixed = fixed.current.translation()
             const tJ3 = j3.current.translation()
 
-            ;[j1, j2].forEach((ref) => {
-                const t = ref.current?.translation()
-                if (!t || !Number.isFinite(t.x)) return
-                if (!ref.current.lerped || !Number.isFinite(ref.current.lerped.x)) {
-                    ref.current.lerped = new Vector3(t.x, t.y, t.z)
+            const segments = [
+                { ref: j1, lerped: j1Lerped },
+                { ref: j2, lerped: j2Lerped }
+            ]
+
+            segments.forEach(({ ref, lerped }) => {
+                if (!ref.current) return
+                const t = ref.current.translation()
+                if (!Number.isFinite(t.x)) return
+                if (!Number.isFinite(lerped.current.x)) {
+                    lerped.current.copy(t)
                 }
-                const dist = ref.current.lerped.distanceTo(t)
+                const dist = lerped.current.distanceTo(t)
                 const clampedDistance = Math.max(0.1, Math.min(1, Number.isFinite(dist) ? dist : 0.1))
                 const alpha = Math.min(1, Math.max(0, safeDelta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))))
-                ref.current.lerped.lerp(t, alpha)
+                lerped.current.lerp(t, alpha)
             })
 
-            if (Number.isFinite(tJ3.x) && Number.isFinite(tFixed.x) && j1.current.lerped && j2.current.lerped) {
+            if (Number.isFinite(tJ3.x) && Number.isFinite(tFixed.x)) {
                 curve.points[0].copy(tJ3)
-                curve.points[1].copy(j2.current.lerped)
-                curve.points[2].copy(j1.current.lerped)
+                curve.points[1].copy(j2Lerped.current)
+                curve.points[2].copy(j1Lerped.current)
                 curve.points[3].copy(tFixed)
                 const points = curve.getPoints(32)
                 const isValid = points.every(
                     (p) => Number.isFinite(p.x) && Number.isFinite(p.y) && Number.isFinite(p.z)
                 )
                 if (isValid) {
-                    band.current?.geometry?.setPoints(points)
+                    lineGeometry.setPoints(points)
                 }
             }
 
@@ -192,17 +219,18 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
         texture.wrapS = texture.wrapT = RepeatWrapping
     }, [texture])
 
-    const screenWidth = window.innerWidth
-    const isLarge = screenWidth >= 1024
-
     const handlePointerUp = (e: ThreeEvent<PointerEvent>) => {
-        e.target?.releasePointerCapture(e.pointerId)
+        ;(e.target as HTMLElement | null)?.releasePointerCapture(e.pointerId)
         setDragged(false)
     }
 
     const handlePointerDown = (e: ThreeEvent<PointerEvent>) => {
-        e.target?.setPointerCapture(e.pointerId)
-        setDragged(new Vector3().copy(e.point).sub(vec.copy(card.current?.translation())))
+        ;(e.target as HTMLElement | null)?.setPointerCapture(e.pointerId)
+
+        const cardTranslation = card.current?.translation()
+        if (cardTranslation) {
+            setDragged(new Vector3().copy(e.point).sub(vec.copy(cardTranslation)))
+        }
     }
 
     return (
@@ -235,20 +263,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
                     />
                 </RigidBody>
             </group>
-            <mesh ref={band}>
-                <meshLineGeometry />
-                <meshLineMaterial
-                    color='#05df72'
-                    depthTest={false}
-                    resolution={[width, height]}
-                    useMap
-                    map={texture}
-                    repeat={[-3, 1]}
-                    lineWidth={isLarge ? 2 : 1.25}
-                    transparent
-                    opacity={0.75}
-                />
-            </mesh>
+            <mesh geometry={lineGeometry} material={lineMaterial} />
         </>
     )
 }
