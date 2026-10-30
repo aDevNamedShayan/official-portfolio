@@ -3,27 +3,28 @@
 
 'use client'
 
+import { useEffect, useMemo, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useTranslations } from 'next-intl'
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { Mesh, Vector3, CatmullRomCurve3, RepeatWrapping } from 'three'
-import { Canvas, extend, useThree, useFrame, ThreeEvent } from '@react-three/fiber'
-import { useTexture, Environment, Lightformer, PerformanceMonitor } from '@react-three/drei'
+import { Environment, Lightformer, PerformanceMonitor, useTexture } from '@react-three/drei'
+import { Canvas, extend, GLProps, type ThreeEvent, useFrame, useThree } from '@react-three/fiber'
 import {
     BallCollider,
     CuboidCollider,
     Physics,
     RigidBody,
-    RigidBodyProps,
     useRopeJoint,
     useSphericalJoint,
-    RapierRigidBody
+    type RapierRigidBody,
+    type RigidBodyProps
 } from '@react-three/rapier'
-import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
 import { IconArrowSharpTurnRight } from '@tabler/icons-react'
+import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
+import { CatmullRomCurve3, type Mesh, RepeatWrapping, Vector3 } from 'three'
+
 import { useLocaleDetector } from '@/hooks/useLocaleDetector'
-import { caveat, harmattan } from '@/styles/fonts'
 import { cn } from '@/lib/utils'
+import { caveat, harmattan } from '@/styles/fonts'
 
 import bandTxt from '@/../public/IdCard/band.png'
 
@@ -37,9 +38,9 @@ export function IdCard() {
 
     const t = useTranslations('ContactSection')
     const isEn = useLocaleDetector()
-    const glSettings = useMemo(
+    const glSettings: GLProps = useMemo(
         () => ({
-            powerPerference: 'high-performance',
+            powerPreference: 'high-performance',
             alpha: true,
             antialias: true,
             stencil: false,
@@ -109,13 +110,13 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
         linearDamping: 2
     }
     const { width, height } = useThree((state) => state.size)
-    const [dragged, drag] = useState<Vector3 | boolean>(false)
+    const [dragged, setDragged] = useState<Vector3 | boolean>(false)
     const curve = useMemo(() => {
         const c = new CatmullRomCurve3([new Vector3(), new Vector3(), new Vector3(), new Vector3()])
         c.curveType = 'chordal'
         return c
     }, [])
-    const [hovered, hover] = useState(false)
+    const [hovered, setHovered] = useState(false)
 
     useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1])
     useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1])
@@ -133,7 +134,9 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
     }, [hovered, dragged])
 
     useFrame((state, delta) => {
-        if (dragged) {
+        const safeDelta = Math.min(delta, 0.05)
+
+        if (dragged instanceof Vector3) {
             vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera)
             dir.copy(vec).sub(state.camera.position).normalize()
             vec.add(dir.multiplyScalar(state.camera.position.length()))
@@ -144,26 +147,44 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
                 z: vec.z - dragged.z
             })
         }
-        if (fixed.current) {
+
+        if (fixed.current && j1.current && j2.current && j3.current && card.current) {
+            const tFixed = fixed.current.translation()
+            const tJ3 = j3.current.translation()
+
             ;[j1, j2].forEach((ref) => {
-                if (!ref.current?.lerped) ref.current.lerped = new Vector3().copy(ref.current.translation())
-                const clampedDistance = Math.max(
-                    0.1,
-                    Math.min(1, ref.current.lerped.distanceTo(ref.current.translation()))
-                )
-                ref.current?.lerped.lerp(
-                    ref.current.translation(),
-                    delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))
-                )
+                const t = ref.current?.translation()
+                if (!t || !Number.isFinite(t.x)) return
+                if (!ref.current.lerped || !Number.isFinite(ref.current.lerped.x)) {
+                    ref.current.lerped = new Vector3(t.x, t.y, t.z)
+                }
+                const dist = ref.current.lerped.distanceTo(t)
+                const clampedDistance = Math.max(0.1, Math.min(1, Number.isFinite(dist) ? dist : 0.1))
+                const alpha = Math.min(1, Math.max(0, safeDelta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))))
+                ref.current.lerped.lerp(t, alpha)
             })
-            curve.points[0].copy(j3.current?.translation())
-            curve.points[1].copy(j2.current?.lerped)
-            curve.points[2].copy(j1.current?.lerped)
-            curve.points[3].copy(fixed.current.translation())
-            band.current?.geometry?.setPoints(curve.getPoints(32))
-            ang.copy(card.current?.angvel())
-            rot.copy(card.current?.rotation())
-            card.current?.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.1, z: ang.z }, true)
+
+            if (Number.isFinite(tJ3.x) && Number.isFinite(tFixed.x) && j1.current.lerped && j2.current.lerped) {
+                curve.points[0].copy(tJ3)
+                curve.points[1].copy(j2.current.lerped)
+                curve.points[2].copy(j1.current.lerped)
+                curve.points[3].copy(tFixed)
+                const points = curve.getPoints(32)
+                const isValid = points.every(
+                    (p) => Number.isFinite(p.x) && Number.isFinite(p.y) && Number.isFinite(p.z)
+                )
+                if (isValid) {
+                    band.current?.geometry?.setPoints(points)
+                }
+            }
+
+            const currentAngvel = card.current.angvel()
+            const currentRotation = card.current.rotation()
+            if (currentAngvel && currentRotation) {
+                ang.copy(currentAngvel)
+                rot.copy(currentRotation)
+                card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.1, z: ang.z }, true)
+            }
         }
     })
 
@@ -174,11 +195,15 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
     const screenWidth = window.innerWidth
     const isLarge = screenWidth >= 1024
 
-    const handlePointerUp = (e: ThreeEvent<PointerEvent>) => (e.target?.releasePointerCapture(e.pointerId), drag(false))
-    const handlePointerDown = (e: ThreeEvent<PointerEvent>) => (
-        e.target?.setPointerCapture(e.pointerId),
-        drag(new Vector3().copy(e.point).sub(vec.copy(card.current?.translation())))
-    )
+    const handlePointerUp = (e: ThreeEvent<PointerEvent>) => {
+        e.target?.releasePointerCapture(e.pointerId)
+        setDragged(false)
+    }
+
+    const handlePointerDown = (e: ThreeEvent<PointerEvent>) => {
+        e.target?.setPointerCapture(e.pointerId)
+        setDragged(new Vector3().copy(e.point).sub(vec.copy(card.current?.translation())))
+    }
 
     return (
         <>
@@ -203,8 +228,8 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
                     <Tag
                         scale={isLarge ? 3.75 : 2.5}
                         position={isLarge ? [0, -3, -0.05] : [0, -1.5, -0.05]}
-                        onPointerOver={() => hover(true)}
-                        onPointerOut={() => hover(false)}
+                        onPointerOver={() => setHovered(true)}
+                        onPointerOut={() => setHovered(false)}
                         onPointerUp={handlePointerUp}
                         onPointerDown={handlePointerDown}
                     />
